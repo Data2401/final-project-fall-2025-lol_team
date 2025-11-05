@@ -66,12 +66,39 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 
 ## MSI Table -TY
-
+Creating a new table called 'MSI_Tbl' to join the Match Stats table and Item Table
 
 
 
 
 ```{r}
+MSI_Tbl <- full_join(matchStatsTbl, itemTbl, 
+                     by = join_by(item1 == ItemID),
+                     suffix = c("", "_1"))
+
+MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
+                     by = join_by(item2 == ItemID), 
+                     suffix = c("", "_2"))
+
+MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
+                     by = join_by(item3 == ItemID), 
+                     suffix = c("", "_3"))
+
+MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
+                     by = join_by(item4 == ItemID), 
+                     suffix = c("", "_4"))
+
+
+MSI_Tbl  <- full_join(MSI_Tbl, itemTbl, 
+                     by = join_by(item5 == ItemID), 
+                     suffix = c("", "_5"))
+
+
+MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
+                     by = join_by(item6 == ItemID), 
+                     suffix = c("", "_6"))
+
+MSI_Tbl
 
 ```
 
@@ -94,12 +121,15 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 
 ## TMM Tbl -TY
-
+Create new table called 'TMM_Tbl' to join Team Match Table and Match Table
 
 
 
 ```{r}
+TMM_Tbl <- full_join(TeamMatchTbl, matchTbl, by = join_by(MatchFk == MatchId))
+TMM_Tbl
 
+TMR_Tble <- full_join(TeamMatchTbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
 ```
 
 
