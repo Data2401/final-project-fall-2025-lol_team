@@ -55,13 +55,15 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 
 
-
+The following the data set has basically an NA value named 'No champion'. The data set has been updated so that it only represents actual champions that are playable in League of Legends.
 
 ```{r}
-
+championTbl <- championTbl %>% 
+  filter(ChampionId > 0)
+head(championTbl)
 ```
 
-
+As you can see, there is no longer a champion ID 0 - No champion. Using the dplyr function filter we successfully removed any irrelevant or not needed rows. 
 
 
 
@@ -82,11 +84,12 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 ## match_rank Table -VA
 
 
-
-
+We have created a new table called match_rank_tbl.
+The purpose of this table is to join both the match table and the rank table by their RankFk == RankId. This will let us know whether the match was ranked or unranked.
 
 ```{r}
-
+match_rank_tbl <- full_join(matchTbl,RankTbl,join_by(RankFk == RankId))
+head(match_rank_tbl)
 ```
 
 
@@ -108,12 +111,15 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ## SMR tbl -VA
 
-
-
+The following table was created in order to join both the summoner match table and a match rank table.
+This table displays a smaller depiction 
 
 
 ```{r}
+SMR_Tbl <- full_join(SummonerMatchTbl, championTbl, join_by(ChampionFk == ChampionId))
 
+SMR_Tbl <- full_join(SMR_Tbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
+head(SMR_Tbl)
 ```
 
 
