@@ -7,32 +7,33 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 library(dplyr)
 library(ggplot2)
 ```
 
 ## Read csv files
 ```{r}
-championTbl <- read.csv("archive/ChampionTbl.csv")
-itemTbl<- read.csv("archive/ItemTbl.csv")
-matchStatsTbl <- read.csv("archive/MatchStatsTbl.csv")
-matchTbl <- read.csv("archive/MatchTbl.csv")
-RankTbl <- read.csv("archive/RankTbl.csv")
-SummonerMatchTbl <- read.csv("archive/SummonerMatchTbl.csv")
-TeamMatchTbl <- read.csv("archive/TeamMatchTbl.csv")
+championTbl <- read.csv("ChampionTbl.csv")
+itemTbl<- read.csv("ItemTbl.csv")
+matchStatsTbl <- read.csv("MatchStatsTbl.csv")
+matchTbl <- read.csv("MatchTbl.csv")
+RankTbl <- read.csv("RankTbl.csv")
+SummonerMatchTbl <- read.csv("SummonerMatchTbl.csv")
+TeamMatchTbl <- read.csv("TeamMatchTbl.csv")
 
 
 ```
 
 ## View datasets
 ```{r}
-glimpse(championTbl)
-glimpse(itemTbl)
-glimpse(matchStatsTbl)
-glimpse(matchTbl)
-glimpse(RankTbl)
-glimpse(SummonerMatchTbl)
-glimpse(TeamMatchTbl)
+head(championTbl) 
+head(itemTbl)
+head(matchStatsTbl)
+head(matchTbl)
+head(RankTbl)
+head(SummonerMatchTbl)
+head(TeamMatchTbl)
 ```
 
 ## Including Plots
