@@ -10,6 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(kableExtra)
+library(gridExtra)
+
 ```
 
 ## Read csv files
@@ -21,19 +24,17 @@ matchTbl <- read.csv("MatchTbl.csv")
 RankTbl <- read.csv("RankTbl.csv")
 SummonerMatchTbl <- read.csv("SummonerMatchTbl.csv")
 TeamMatchTbl <- read.csv("TeamMatchTbl.csv")
-
-
 ```
 
 ## View datasets
 ```{r}
-head(championTbl) 
-head(itemTbl)
-head(matchStatsTbl)
-head(matchTbl)
-head(RankTbl)
-head(SummonerMatchTbl)
-head(TeamMatchTbl)
+head(championTbl) %>% knitr::kable()
+head(itemTbl) %>% knitr::kable()
+head(matchStatsTbl) %>% knitr::kable()
+head(matchTbl) %>% knitr::kable()
+head(RankTbl) %>% knitr::kable()
+head(SummonerMatchTbl) %>% knitr::kable()
+head(TeamMatchTbl) %>% knitr::kable()
 ```
 
 ## Including Plots
@@ -48,3 +49,74 @@ itemTbl %>%
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Champion Table -VA
+
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
+## MSI Table -TY
+
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
+## match_rank Table -VA
+
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
+## TMM Tbl -TY
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
+## SMR tbl -VA
+
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
