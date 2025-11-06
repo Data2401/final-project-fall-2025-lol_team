@@ -35,6 +35,7 @@ head(matchTbl) %>% knitr::kable()
 head(RankTbl) %>% knitr::kable()
 head(SummonerMatchTbl) %>% knitr::kable()
 head(TeamMatchTbl) %>% knitr::kable()
+
 ```
 
 ## Including Plots
@@ -131,6 +132,13 @@ SMR_Tbl <- full_join(SummonerMatchTbl, championTbl, join_by(ChampionFk == Champi
 
 SMR_Tbl <- full_join(SMR_Tbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
 head(SMR_Tbl)
+```
+
+## Joining SMR table and MSI table -TY
+```{r}
+#SMRI_tbl <- full_join(SMR_Tbl, MSI_Tbl, by = join_by(SummonerMatchId==SummonerMatchFk))
+#SMRI_tbl 
+#Needs further filtering 
 ```
 
 
