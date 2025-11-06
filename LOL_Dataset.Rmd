@@ -125,13 +125,13 @@ TMR_Tble
 The following table was created in order to join both the summoner match table and a match rank table.
 This table displays a smaller depiction 
 
+
 ```{r}
 SMR_Tbl <- full_join(SummonerMatchTbl, championTbl, join_by(ChampionFk == ChampionId))
 
 SMR_Tbl <- full_join(SMR_Tbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
 head(SMR_Tbl)
 ```
-
 
 
 
