@@ -129,10 +129,8 @@ Create new table called 'TMM_Tbl' to join Team Match Table and Match Table
 
 
 ```{r}
-TMM_Tbl <- full_join(TeamMatchTbl, matchTbl, by = join_by(MatchFk == MatchId))
-TMM_Tbl
-
 TMR_Tble <- full_join(TeamMatchTbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
+TMR_Tble
 ```
 
 
