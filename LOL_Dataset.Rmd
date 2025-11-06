@@ -38,16 +38,6 @@ head(TeamMatchTbl) %>% knitr::kable()
 
 ```
 
-## Including Plots
-
-Create a new table that combines 
-
-```{r}
-itemTbl %>% 
-  filter(ItemID == "2055")
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 ## Champion Table -VA
 
@@ -110,7 +100,7 @@ head(match_rank_tbl)
 
 
 
-## TMM Tbl -TY
+## TMR Tbl -TY
 Create new table called 'TMM_Tbl' to join Team Match Table and Match Table
 
 
@@ -143,5 +133,119 @@ head(SMR_Tbl)
 
 
 
+## Tamana MSI_tbl and Match_rank_tbl dplyr and plot functions
+
+1. MSI_tbl How many SummonerMatchFk play more than one lane
 
 
+```{r}
+
+```
+
+
+2. MSI_tbl Mean, Median, Max, Min minions killed, TurretDmg, DmgTaken, DmgDealt, totalGold.
+
+
+```{r}
+
+```
+
+
+3. MSI_tbl create new column (boolean) for indicating win or lose. Filter to win and lose only and create a ggplots.
+
+```{r}
+
+```
+
+
+4. MSI_tbl (ask professor) Items, filter remove NAs, count total items, most popular items, least popular items. Median qne mean items a player holds. 
+
+
+```{r}
+
+```
+
+
+5. Line plot game duration as the Y value and Queue type as the X value, filter based on RankName.
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Veronica
+
+1. TMR_tbl Filter teams with winning arams, classics based on rank. 
+2. TMR_tbl create column (boolean) indicating win or lose. 
+3. TMR_tbl Filter winning teams, most used champion in red team and blue team 
+4. TMR_tbl create column (boolean) indicating win or lose. 
+
+```{r}
+
+```
