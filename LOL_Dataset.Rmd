@@ -41,8 +41,6 @@ head(TeamMatchTbl) %>% knitr::kable()
 
 Create a new table that combines 
 
-
-
 ```{r}
 itemTbl %>% 
   filter(ItemID == "2055")
@@ -50,10 +48,7 @@ itemTbl %>%
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-
 ## Champion Table -VA
-
-
 
 The following the data set has basically an NA value named 'No champion'. The data set has been updated so that it only represents actual champions that are playable in League of Legends.
 
@@ -65,12 +60,8 @@ head(championTbl)
 
 As you can see, there is no longer a champion ID 0 - No champion. Using the dplyr function filter we successfully removed any irrelevant or not needed rows. 
 
-
-
 ## MSI Table -TY
 Creating a new table called 'MSI_Tbl' to join the Match Stats table and Item Table
-
-
 
 
 ```{r}
@@ -106,10 +97,7 @@ MSI_Tbl
 
 
 
-
-
 ## match_rank Table -VA
-
 
 We have created a new table called match_rank_tbl.
 The purpose of this table is to join both the match table and the rank table by their RankFk == RankId. This will let us know whether the match was ranked or unranked.
@@ -121,11 +109,8 @@ head(match_rank_tbl)
 
 
 
-
-
 ## TMM Tbl -TY
 Create new table called 'TMM_Tbl' to join Team Match Table and Match Table
-
 
 
 ```{r}
@@ -135,13 +120,10 @@ TMR_Tble
 
 
 
-
-
 ## SMR tbl -VA
 
 The following table was created in order to join both the summoner match table and a match rank table.
 This table displays a smaller depiction 
-
 
 ```{r}
 SMR_Tbl <- full_join(SummonerMatchTbl, championTbl, join_by(ChampionFk == ChampionId))
@@ -149,6 +131,7 @@ SMR_Tbl <- full_join(SummonerMatchTbl, championTbl, join_by(ChampionFk == Champi
 SMR_Tbl <- full_join(SMR_Tbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
 head(SMR_Tbl)
 ```
+
 
 
 
