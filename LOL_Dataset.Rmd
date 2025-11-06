@@ -177,6 +177,10 @@ head(SMR_Tbl)
 6. Plot game duration density 
 
 
+```{r}
+
+```
+
 
 
 
@@ -241,10 +245,36 @@ head(SMR_Tbl)
 
 ## Veronica
 
-1. TMR_tbl create column (boolean) indicating win or lose. 
+1. TMR_tbl create column (boolean) indicating win or lose.
+
+
+```{r}
+
+```
+
+
 2. TMR_tbl Filter teams with winning arams, classics based on rank. Bar graph & scatter plot x = rank, y = # of wins, color by queue types, density. face wrap
+
+
+```{r}
+
+```
+
+
 3. TMR_tbl Filter winning teams, most used champion in red team and blue team 
+
+```{r}
+
+```
+
+
 4. TMR_tbl find the mean, median, max and min (all kills) only for classic queue types
+
+```{r}
+
+```
+
+
 5. TMR_tbl Count the number game plays per queue types plot
 
 ```{r}
@@ -253,5 +283,22 @@ head(SMR_Tbl)
 
 
 7. SMR_tbl: Top 10 people that play: Queue types. 
+
+```{r}
+
+```
+
+
 8. SMR_tbl:  Histogram champions
-9. SMR_tbl: Filter MSI_table to only have matchID and wins. Join with SMR table. Calculate the top 10 players with the most wins. 
+
+```{r}
+
+```
+
+
+9. SMR_tbl: Filter MSI_table to only have matchID and wins. Join with SMR table. Calculate the top 10 players with the most wins.
+
+```{r}
+
+```
+
