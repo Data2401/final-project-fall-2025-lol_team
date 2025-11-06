@@ -241,11 +241,16 @@ head(SMR_Tbl)
 
 ## Veronica
 
-1. TMR_tbl Filter teams with winning arams, classics based on rank. 
-2. TMR_tbl create column (boolean) indicating win or lose. 
+1. TMR_tbl create column (boolean) indicating win or lose. 
+2. TMR_tbl Filter teams with winning arams, classics based on rank. Bar graph & scatter plot x = rank, y = # of wins, color by queue types, density. face wrap
 3. TMR_tbl Filter winning teams, most used champion in red team and blue team 
-4. TMR_tbl create column (boolean) indicating win or lose. 
+4. Plot game duration density 
+5. TMR_tbl find the mean, median, max and min (all kills) only for classic queue types
+6. TMR_tbl Count the number game plays per queue types plot
 
 ```{r}
 
 ```
+
+
+7. 
