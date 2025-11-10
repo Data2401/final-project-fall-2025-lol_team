@@ -400,6 +400,7 @@ ggplotly(ggplot(Player_Games,aes(x = QueueType, fill = QueueType, text = paste("
 8. SMR_tbl:  Histogram champions
 
 ```{r}
+#CHANGE
 
 ```
 
