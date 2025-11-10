@@ -168,13 +168,17 @@ MSI_Tbl %>%
 - totalGold.
 
 
-```{r}
+Mean median min and max of minions kiled: 
+```{r, echo = F}
 # mean, median, min, and max of Minions Killed
 MSI_Tbl%>%
   summarise(avg_minionsKilled = mean(MinionsKilled, na.rm = T),
             median_minionsKilled = median(MinionsKilled, na.rm = T),
             min_minionsKilled = min(MinionsKilled, na.rm = T),
             max_minionsKilled = max(MinionsKilled, na.rm = T))
+```
+
+```{r}
 
 # mean, median, min, and max of TurretDmg
 MSI_Tbl%>%
@@ -238,8 +242,8 @@ match_rank_tbl %>%
   group_by(RankName)%>%
   summarise(Duration= n())
 
-ggplot(match_rank_tbl, aes(x= QueueType, y = GameDuration)) + 
-  geom_line() + 
+ggplot(match_rank_tbl, aes(color= QueueType,x = GameDuration)) + 
+  geom_density() + 
   labs(title = "Game Duration",
   x = "Queue Type",
   y = "Time")
@@ -387,7 +391,7 @@ Player_Games <- SMR_Tbl %>%
   summarise(games = n()) %>% 
   arrange(SummonerFk)
   
-Temp
+
 ggplotly(ggplot(Player_Games,aes(x = QueueType, fill = QueueType, text = paste("Count:", after_stat(count)))) + geom_bar(), tooltip = "text", na.rm = TRUE)
 
 #ggplotly(ggplot(Player_Games,aes(x = QueueType, y = RankName, color = QueueType) + geom_bar(), tooltip = "text", na.rm = TRUE)
