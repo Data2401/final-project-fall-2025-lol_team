@@ -135,26 +135,78 @@ head(SMR_Tbl)
 
 ## Tamana MSI_tbl and Match_rank_tbl dplyr and plot functions
 
-1. MSI_tbl How many SummonerMatchFk play more than one lane
+#MSI_Tbl
+
+1. How many SummonerMatchFk play more than one lane
 
 
 ```{r}
+MSI_Tbl %>%
+  group_by(SummonerMatchFk)%>%
+  summarise(num_lanes = n_distinct(Lane))%>% #count the unique lanes
+  filter(num_lanes > 1)%>%
+  summarise(total_players = n())
 
 ```
 
 
-2. MSI_tbl Mean, Median, Max, Min minions killed, TurretDmg, DmgTaken, DmgDealt, totalGold.
+2. Find the Mean, Median, Max, and Min for the following:
+- minions killed
+- TurretDmg
+- DmgTaken
+- DmgDealt
+- totalGold.
 
 
 ```{r}
+# mean, median, min, and max of Minions Killed
+MSI_Tbl%>%
+  summarise(avg_minionsKilled = mean(MinionsKilled, na.rm = T),
+            median_minionsKilled = median(MinionsKilled, na.rm = T),
+            min_minionsKilled = min(MinionsKilled, na.rm = T),
+            max_minionsKilled = max(MinionsKilled, na.rm = T))
 
+# mean, median, min, and max of TurretDmg
+MSI_Tbl%>%
+  summarise(avg_TurretDmgDealt = mean(TurretDmgDealt, na.rm = T),
+            median_TurretDmgDealt = median(TurretDmgDealt, na.rm = T),
+            min_TurretDmgDealt = min(TurretDmgDealt, na.rm = T), 
+            max_TurretDmgDealt = max(TurretDmgDealt, na.rm = T))
+
+# mean, median, min, and max of DmgTaken
+MSI_Tbl%>%
+  summarise(avg_DmgTaken = mean(DmgTaken, na.rm = T),
+            median_DmgTaken = median(DmgTaken, na.rm = T), 
+            min_DmgTaken = min(DmgTaken, na.rm = T),
+            max_DmgTaken = max(DmgTaken, na.rm = T))
+
+# mean, median, min, and max of DmgDealt
+MSI_Tbl%>%
+  summarise(avg_DmgDealt = mean(DmgDealt, na.rm = T),
+            median_DmgDealt = median(DmgDealt, na.rm = T), 
+            min_DmgDealt = min(DmgDealt, na.rm = T),
+            max_DmgDealt = max(DmgDealt, na.rm = T))
+
+# mean, median, min, and max of totalGold
+MSI_Tbl%>%
+  summarise(avg_TotalGold = mean(TotalGold, na.rm = T),
+            median_TotalGold = median(TotalGold, na.rm = T), 
+            min_TotalGold = min(TotalGold, na.rm = T),
+            max_TotalGold = max(TotalGold, na.rm = T))
 ```
 
 
-3. MSI_tbl create new column (boolean) for indicating win or lose. Filter to win and lose only and create a ggplots.
+3. Create new column (boolean) for indicating win or lose. Filter to win and lose only and create a ggplots.
 
 ```{r}
-
+MSI_Tbl%>%
+  mutate(won = Win != 0)%>%
+  drop_na(won)%>% 
+  ggplot(aes(x=won, fill=won)) + 
+  geom_bar() +
+  labs(title = "Win vs. Lose",
+       x = "results",
+       y = "count")
 ```
 
 
@@ -162,7 +214,9 @@ head(SMR_Tbl)
 
 
 ```{r}
-
+#Lost and confused about this part, will have to ask the professor 
+MSI_Tbl%>%
+  drop_na(item1, item2, item3, item4, item5, item6)
 ```
 
 
@@ -170,7 +224,15 @@ head(SMR_Tbl)
 
 
 ```{r}
+match_rank_tbl %>%
+  group_by(RankName)%>%
+  summarise(Duration= n())
 
+ggplot(match_rank_tbl, aes(x= QueueType, y = GameDuration)) + 
+  geom_line() + 
+  labs(title = "Game Duration",
+  x = "Queue Type",
+  y = "Time")
 ```
 
 
@@ -178,7 +240,10 @@ head(SMR_Tbl)
 
 
 ```{r}
-
+ggplot(match_rank_tbl, aes(x=GameDuration, fill = QueueType)) +
+  geom_density() +
+  labs(title = "Game Duration") + 
+  facet_wrap(~QueueType)
 ```
 
 
