@@ -18,7 +18,7 @@ source("R_Data_Prep.R")
 'Calculate the new variable for winning teams 
 2. TMR_tbl Filter teams with winning arams, classics based on rank.
 Bar graph & scatter plot x = rank, y = # of wins, color by queue types, density. face wrap.'
-
+#CHANGE
   
 color_options <- c("Side","QueueType","RankName")
 x_axis_options <- c( "TeamID","GameDuration")
