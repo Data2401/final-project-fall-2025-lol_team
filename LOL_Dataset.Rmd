@@ -12,7 +12,6 @@ https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner
 - The data comes from European reign called League of Legends
 - Shows team analysis and per player analysis providing insight stats in KDA, items, characters "champions', winning, etc 
 - The dataset comes from Kaggle.com
-
 ##Introduction 
 This dataset provides comprehensive match and player information from League of Legends, one of the world’s most popular multiplayer online battle arena (MOBA) games. It features data from 35,000 matches and over 78,000 player records, covering various in-game aspects such as champion choices, performance metrics, match results, and other gameplay statistics. This dataset consist of 7 tables: MatchStatsTbl, TeamMatchStatsTbl, MatchTbl, RankTble, ChampionTbl, ItemTbl, SummonerTbl, and SummonerMatchTbl. 
 
@@ -75,35 +74,7 @@ As you can see, there is no longer a champion ID 0 - No champion. Using the dply
 ## MSI Table -TY
 Creating a new table called 'MSI_Tbl' to join the Match Stats table and Item Table
 
-
-```{r}
-'
-MSI_Tbl <- full_join(matchStatsTbl, itemTbl, 
-                     by = join_by(item1 == ItemID),
-                     suffix = c("", "_1"))
-
-MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
-                     by = join_by(item2 == ItemID), 
-                     suffix = c("", "_2"))
-
-MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
-                     by = join_by(item3 == ItemID), 
-                     suffix = c("", "_3"))
-
-MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
-                     by = join_by(item4 == ItemID), 
-                     suffix = c("", "_4"))
-
-
-MSI_Tbl  <- full_join(MSI_Tbl, itemTbl, 
-                     by = join_by(item5 == ItemID), 
-                     suffix = c("", "_5"))
-
-
-MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
-                     by = join_by(item6 == ItemID), 
-                     suffix = c("", "_6"))
-```
+ooo;'
 
 
 
@@ -271,8 +242,8 @@ ggplot(match_rank_tbl, aes(x=GameDuration, fill = QueueType)) +
 
 
 ```{r}
-p <- full_join(SummonerMatchTbl, MSI_Tbl, by = join_by(SummonerMatchFK = SummonerMatchId))
-p
+#p <- full_join(SummonerMatchTbl, MSI_Tbl, by = join_by(SummonerMatchFK == SummonerMatchId))
+#p
 ```
 
 
