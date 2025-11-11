@@ -3,7 +3,7 @@ title: "LOL_Dataset_Project"
 author: "Tamana Yaqoubi, Veronica Alviso"
 date: "2025-11-04"
 output: html_document
-#runtime: shiny
+runtime: shiny
 ---
 
 ## About the dataset 
