@@ -6,6 +6,18 @@ output: html_document
 runtime: shiny
 ---
 
+## About the dataset 
+https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner-data-80k-matches
+
+- The data comes from European reign called League of Legends
+- Shows team analysis and per player analysis providing insight stats in KDA, items, characters "champions', winning, etc 
+- The dataset comes from Kaggle.com
+
+##Introduction 
+This dataset provides comprehensive match and player information from League of Legends, one of the world’s most popular multiplayer online battle arena (MOBA) games. It features data from 35,000 matches and over 78,000 player records, covering various in-game aspects such as champion choices, performance metrics, match results, and other gameplay statistics. This dataset consist of 7 tables: MatchStatsTbl, TeamMatchStatsTbl, MatchTbl, RankTble, ChampionTbl, ItemTbl, SummonerTbl, and SummonerMatchTbl. 
+
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -91,9 +103,6 @@ MSI_Tbl  <- full_join(MSI_Tbl, itemTbl,
 MSI_Tbl <- full_join(MSI_Tbl, itemTbl, 
                      by = join_by(item6 == ItemID), 
                      suffix = c("", "_6"))
-
-MSI_Tbl
-'
 ```
 
 
@@ -261,6 +270,10 @@ ggplot(match_rank_tbl, aes(x=GameDuration, fill = QueueType)) +
 ```
 
 
+```{r}
+p <- full_join(SummonerMatchTbl, MSI_Tbl, by = join_by(SummonerMatchFK = SummonerMatchId))
+p
+```
 
 
 
