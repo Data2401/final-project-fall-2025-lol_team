@@ -459,34 +459,9 @@ MSI_Tbl %>%
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ```{r}
 
 ```
-
-
-
-
 
 
 ## Veronica
@@ -567,15 +542,6 @@ view(Team_Winner_Stats)
 ```
 
 
-```{r}
-
-```
-
-```{r}
-
-  
-```
-
 # Bar plot 
 ```{r}
 ggplotly(ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
@@ -618,7 +584,6 @@ Player_Games %>%
   drop_na(RankName) %>% 
   rename(Players = n)
 ```
-
 
 What rank players fall in in this data set. 
 
