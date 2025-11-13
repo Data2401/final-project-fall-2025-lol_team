@@ -474,6 +474,43 @@ MSI_Tbl %>%
 ```
 
 
+
+
+```{r}
+
+```
+
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+
+```{r}
+
+```
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
 2. TMR_tbl Filter teams with winning arams, classics based on rank. Bar graph & scatter plot x = rank, y = # of wins, color by queue types, density. face wrap
 
 Let us look at all winning teams from each map type.
