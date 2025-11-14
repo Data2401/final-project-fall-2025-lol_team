@@ -88,7 +88,7 @@ match_rank_tbl %>%
 
 
 ## TMR Tbl -TY
-Create new table called 'TMM_Tbl' to join Team Match Table and Match Table
+Created a new table called 'TMR_Tbl' to join Team Match Table and Match Table by MatchFk and MatchId.
 
 ```{r, echo = F}
 TMR_Tble %>%
@@ -129,7 +129,7 @@ MSI_Tbl
 
 1. How many SummonerMatchFk play more than one lane
 
-
+This code shows how many player plays in more than one lane 
 ```{r, echo=FALSE}
 MSI_Tbl %>%
   group_by(SummonerMatchFk)%>%
@@ -181,17 +181,136 @@ MSI_Tbl%>%
 
 
 
+Mean median min and max of minions killed: 
+```{r}
+m <- MSI_Tbl%>%
+  drop_na(MinionsKilled) %>%
+  group_by(Lane) %>% 
+  summarise(avg_minionsKilled = mean(MinionsKilled, na.rm = T),
+            median_minionsKilled = median(MinionsKilled, na.rm = T),
+            min_minionsKilled = min(MinionsKilled, na.rm = T),
+            max_minionsKilled = max(MinionsKilled, na.rm = T))
+
+mean1 <- ggplot(m, aes(x = avg_minionsKilled, y = Lane, fill = Lane)) + geom_col() + labs(title = "Average Minions Killed Per Lane", x = "Average Minions Killed", y = "Lane")
+mean1
+
+med1 <- ggplot(m, aes(x = median_minionsKilled, y = Lane, fill = Lane)) + geom_col() + labs(title = "Median Minions Killed Per Lane", x = "Median Minions Killed", y = "Lane")
+med1
+
+max1 <- ggplot(m, aes(x = max_minionsKilled, y = Lane, fill = Lane)) + geom_col() + labs(title = "Max Minions Killed Per Lane", x = "Maximum Minions Killed", y = "Lane")
+max1
+```
+
+
+
+Mean median min and max of Turret Damage killed:
+```{r,  echo = F}
+m <- MSI_Tbl%>%
+  drop_na(TurretDmgDealt) %>% 
+  group_by(Lane) %>% 
+  summarise(avg_TurretDmgDealt = mean(TurretDmgDealt, na.rm = T),
+            median_TurretDmgDealt = median(TurretDmgDealt, na.rm = T),
+            min_TurretDmgDealt = min(TurretDmgDealt, na.rm = T), 
+            max_TurretDmgDealt = max(TurretDmgDealt, na.rm = T))
+
+mean2 <-ggplot(m, aes(x = avg_TurretDmgDealt, y = Lane, fill = Lane)) + geom_col() + labs(title = "Average Damage Turret Dealt Per Lane", x = "Average Damage Turret Dealt", y = "Lane")
+mean2
+
+med2 <- ggplot(m, aes(x = median_TurretDmgDealt, y = Lane, fill = Lane)) + geom_col() + labs(title= "Median Damage Turret Dealt Per Lane", x = "Median Damage Turret Dealt", y = "Lane")
+med2
+
+max2 <- ggplot(m, aes(x = max_TurretDmgDealt, y = Lane, fill = Lane)) + geom_col() + labs(title = "Maximum of Damage Turret Dealt", x ="Maximum of Damage Turret Dealt", y = "Lane")
+max2
+```
+
+
+
+mean, median, min, and max of Damage Taken:
+```{r, echo = F}
+ m <- MSI_Tbl%>%
+  drop_na(DmgTaken) %>% 
+  group_by(Lane) %>% 
+  summarise(avg_DmgTaken = mean(DmgTaken, na.rm = T),
+            median_DmgTaken = median(DmgTaken, na.rm = T), 
+            min_DmgTaken = min(DmgTaken, na.rm = T),
+            max_DmgTaken = max(DmgTaken, na.rm = T))
+
+mean3 <- ggplot(m, aes(x = avg_DmgTaken, y = Lane, fill = Lane)) + geom_col() + labs(title = "Average Damage Taken Per Lane", x = "Average Damage Taken", y = "Lane")
+mean3  
+
+med3 <- ggplot(m, aes(x = median_DmgTaken, y = Lane, fill = Lane)) + geom_col() + labs(title = "Median Damage Taken Per Lane", x = "Median Damage Taken", y = "Lane")
+med3
+
+max3 <- ggplot(m, aes(x = max_DmgTaken, y = Lane, fill = Lane)) + geom_col() + labs(title = "Maximum Damage Taken Per Lane", x = "Maximum Damage Taken", y = "Lane")
+max3
+```
+
+
+mean, median, min, and max of Damage Dealt:
+```{r, echo = F}
+
+ m<-MSI_Tbl%>%
+  drop_na(DmgDealt) %>% 
+  group_by(Lane) %>% 
+  summarise(avg_DmgDealt = mean(DmgDealt, na.rm = T),
+            median_DmgDealt = median(DmgDealt, na.rm = T), 
+            min_DmgDealt = min(DmgDealt, na.rm = T),
+            max_DmgDealt = max(DmgDealt, na.rm = T))
+
+mean4 <-ggplot(m, aes(x = avg_DmgDealt, y = Lane, fill = Lane)) + geom_col() + labs(title = "Average Damage Dealt Per Lane", x = "Average Damage Dealt", y = "Lane") 
+mean4
+
+med4 <- ggplot(m, aes(x = median_DmgDealt, y = Lane, fill = Lane)) + geom_col() + labs(title = "Median Damage Dealt Per Lane", x = "Median Damage Dealt", y = "Lane")
+med4
+
+max4 <- ggplot(m, aes(x = max_DmgDealt, y = Lane, fill = Lane)) + geom_col() + labs(title = "Maximum Damage Dealt Per Lane", x = "Maximum Damage Dealt", y = "Lane")
+max4
+```
+
+
+mean, median, min, and max of Total Gold:
+```{r, echo = F}
+ m<-MSI_Tbl%>%
+  drop_na(TotalGold) %>% 
+  group_by(Lane) %>% 
+  summarise(avg_TotalGold = mean(TotalGold, na.rm = T),
+            median_TotalGold = median(TotalGold, na.rm = T), 
+            min_TotalGold = min(TotalGold, na.rm = T),
+            max_TotalGold = max(TotalGold, na.rm = T))
+
+mean5 <-ggplot(m, aes(x = avg_TotalGold, y = Lane, fill = Lane)) + geom_col() + labs(title = "Average Total Gold Per Lane", x = "Average Total Gold", y = "Lane")
+mean5
+
+med5 <- ggplot(m, aes(x = median_TotalGold, y = Lane, fill = Lane)) + geom_col() + labs(title = "Median Total Gold Per Lane", x = "Median Total Gold", y = "Lane")
+med5
+
+max5 <- ggplot(m, aes(x = max_TotalGold, y = Lane, fill = Lane)) + geom_col() + labs(title = "Maximum Total Gold Per Lane", x = "Maximum Total Gold", y = "Lane")
+max5
+```
+
+Combining multiple plots for the averages, medians, and maximums of minions killed, Turret Damage killed, Damage Taken, Damage Dealt, and Total Gold
+```{r}
+grid.arrange(mean1, mean2, mean3, mean4, mean5, nrow=5) + theme(axis.text = element_text(angle = 45, hjust = 0))
+grid.arrange(med1, med2, med3, med4, med5, nrow=5)
+grid.arrange(max1, max2, max3, max4, max5, nrow=5)
+```
 
 
 3. Create new column (boolean) for indicating win or lose. Filter to win and lose only and create a ggplots.
 
-```{r, echo = F}
+
+The plot shows the number of games that wins and loses 
+```{r, echo = F} 
 MSI_Tbl%>%
-  mutate(won = Win != 1)%>%
-  drop_na(won)%>% 
-  ggplot(aes(x=won, fill=won)) + 
+  # should i group by queue type?
+  mutate(Teams = ifelse(Win==0 , "Lose", "Win"), 
+         Teams = factor(Teams, levels = c("Win", "Lose")))%>%
+  drop_na(Teams)%>% 
+  ggplot(aes(x=Teams, fill=Teams)) + 
   geom_bar() +
-  labs(title = "Win vs. Lose")
+  labs(title = "Win vs. Lose", 
+       x = "Teams", 
+       y = "Number of Games")
 ```
 
 # Created a new column called SecondLane 
@@ -235,7 +354,12 @@ rm(MSI_Tbl_doubles)
 
 ```
 
-4. MSI_tbl (ask professor) Items, filter NAs from item names, count total items, most popular items, least popular items. Median and mean items a player holds. 
+4. MSI_tbl
+filter NAs from item names, 
+combine and count total items, 
+most popular items, 
+least popular items,
+Median and mean items a player holds. 
 
 ```{r, echo=FALSE}
 #Removing NAs from the MSI_Tbl
@@ -251,7 +375,8 @@ temp_MSI_Tbl <- MSI_Tbl%>%
      )
 
 #Count the total number of items
-new_temp_MSI_Tbl <- temp_MSI_Tbl %>% 
+new_temp_MSI_Tbl <- temp_MSI_Tbl %>%
+  drop_na(new_temp_MSI_Tbl) %>% 
   group_by(ItemNames) %>% 
   summarise(Total_Items=n())
 
@@ -286,7 +411,7 @@ match_rank_tbl %>%
 
 ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) + 
   geom_density() + 
-  labs(title = "Game Duration")
+  labs(title = "Game Duration", x = "Game Duration", y = "Density") 
 ```
 
 
@@ -297,8 +422,10 @@ ggplot(matchStatsTbl, aes(x= kills, color = Lane)) + geom_density() + facet_wrap
 
 
 6. Analyze if totalgold or dmgdealt increases the chances of winning
-```{r, echo=FALSE}
-ggplot(MSI_Tbl, aes(x = TotalGold, y = DmgDealt, color = Win)) + geom_point(alpha = 0.3) + 
+
+The plot shows that earning more gold and dealing more damage do increase the chances of winning
+```{r, echo=False}
+ggplot(MSI_Tbl %>% drop_na(TotalGold), aes(x = TotalGold, y = DmgDealt, color = Win)) + geom_point(alpha = 0.3) + 
   labs(title="Win: Total Gold vs Damage Dealt",
        x = "Total Gold",
        y = "Damage Dealt")
@@ -306,16 +433,17 @@ ggplot(MSI_Tbl, aes(x = TotalGold, y = DmgDealt, color = Win)) + geom_point(alph
 ```
 
 7. Plot top 10 popular items 
-```{r,echo=FALSE}
-Top_Items <- new_temp_MSI_Tbl%>% 
+
+```{r, echo=FALSE}
+Top_Items <- new_temp_MSI_Tbl%>%
+  drop_na(ItemNames) %>%
   slice_max(Total_Items, n = 10)
 
-ggplotly(ggplot(Top_Items %>% 
-                  drop_na(ItemNames), aes(x=ItemNames, y = Total_Items, fill = ItemNames, text = paste("Count:", after_stat(y)))) + geom_col() + 
+ggplotly(ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill = ItemNames, text = paste("Count:", after_stat(y)))) + geom_col() + 
            labs(
              title ="Top 10 Items",
              x = "Item Names",
-             y = "Total Items"), tooltip = "text")
+             y = "Total Items"), tooltip = "text") + theme(axis.text.y = element_text(angle = 45, vjust = 0))
 
 ``` 
 
@@ -339,10 +467,17 @@ champs <- SMR_Tbl %>%
 
 ```{r, echo=FALSE}
 
+  summarise(num_champs = n()) %>% 
+  drop_na(ChampionName)
+
+```
+
+The plot shows the top 10 champions from left to right
+```{r}
 Top_champs <- champs %>% 
   slice_max(num_champs, n = 10)
 
-ggplotly(ggplot(Top_champs, aes(x = ChampionName, y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() + 
+ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() + 
            labs(title = "Top 10 Champions", 
                 x = "Champions Name",
                 y = "Number of Champions"), tooltip = "text")
@@ -354,8 +489,8 @@ rm(Top_champs)
 rm(champs)
 ```
 
-#Second Lane Data analysis for MSI Kills Column plot
 ```{r, echo=FALSE}
+#Second Lane Data analysis for MSI Kills Column plot
 ggplotly(ggplot( MSI_Tbl %>% 
   select(SecondLane,kills,SummonerMatchFk) %>% 
   drop_na(SecondLane) %>% 
@@ -370,8 +505,8 @@ ggplotly(ggplot( MSI_Tbl %>%
 ```
   
 
-#Lane Data analysis for MSI Kills Column plot
 ```{r, echo=FALSE}
+#Lane Data analysis for MSI Kills Column plot
 ggplotly(ggplot( MSI_Tbl %>% 
   select(Lane,kills,SummonerMatchFk) %>% 
   drop_na(Lane) %>% 
@@ -400,6 +535,7 @@ VS <-MSI_Tbl %>%
 
 ```
 
+The plot shows higher vision score average will have higher chances of winning
 ```{r, echo=FALSE}
 ggplot(VS, aes(x = Win, y = VS_avg, fill = Win)) +
   geom_col() + 
@@ -420,23 +556,25 @@ rm(VS)
 ```{r, echo=FALSE}
 ggplot(MSI_Tbl %>% 
          mutate(Win = ifelse(Win == 0, "Lose","Win")), aes(x = visionScore, color = Win)) + geom_density(alpha = 0.4) + 
+         labs(title = "Vision Score: Winning vs Losing Teams",
+       x= "Vision Score", y = "Density")
+```
+
+11. Analyze if higher visionScore will have more wins
+```{r, echo=FALSE}
+ggplot(MSI_Tbl %>% drop_na(visionScore), aes(x = visionScore, color = factor(Win))) + geom_density(alpha = 0.4) + 
   labs(title = "Vision Score: Winning vs Losing Teams",
-       x= "Vision Score")
+       x= "Vision Score", y = "Density")
 ```
 
 
-```{r}
 
-```
-
-
-```{r}
-
-```
-
-
-```{r}
-
+12. Compare kills and Lane 
+```{r, echo=FALSE}
+ggplotly(ggplot(MSI_Tbl %>% 
+                  group_by(Lane) %>% 
+                  count(Lane, wt = kills) %>% 
+                  rename(kills = n), aes(x = Lane, y = kills, fill = Lane, text = paste("Count:", after_stat(y)))) + geom_col() + labs(title = "Kills vs Lane", x = "Lane", y = "kills"), tooltip= "text") 
 ```
 
 
@@ -489,27 +627,6 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_j
 ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) + geom_point(alpha = 0.2))
 
 ```
-
-
-
-```{r}
-
-```
-
-
-
-
-```{r}
-
-```
-
-
-
-
-```{r}
-
-```
-
 
 
 
