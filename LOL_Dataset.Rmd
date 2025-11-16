@@ -14,12 +14,19 @@ https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner
 
 - The data comes from League of legends (European Region). 
 - Shows team analysis and per player analysis providing insight stats in KDA, items, characters "champions', winning, etc 
-- The dataset comes from Kaggle.com
+- The data comes from Kaggle.com
+
 ##Introduction 
 This dataset provides comprehensive match and player information from League of Legends, one of the world’s most popular multiplayer online battle arena (MOBA) games. It features data from 35,000 matches and over 78,000 player records, covering various in-game aspects such as champion choices, performance metrics, match results, and other gameplay statistics. This dataset consist of 7 tables: MatchStatsTbl, TeamMatchStatsTbl, MatchTbl, RankTble, ChampionTbl, ItemTbl, SummonerTbl, and SummonerMatchTbl. 
 
+## Combined (Joined) Data
 
-
+What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
+ - match_rank_tbl : This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
+ - MSI_Tbl : This data set will display the players detailed match stats which include kills for both enemy champions and monsters affiliated and include item purchase and summoner spells.
+ - SMR_Tbl : This data set displays the players detailed 
+ 
+ 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -42,27 +49,14 @@ source("R_Data_Prep.R")
 
 ```
 
-## Modified Tables
-## Champion Table -VA
 
-The following the data set has basically an NA value named 'No champion'. The data set has been updated so that it only represents actual champions that are playable in League of Legends.
-
-```{r}
+```{r, echo=FALSE}
 championTbl %>%
   slice_head(n = 20) %>%           
   kbl() %>%
   kable_styling() %>%
   scroll_box(width = "100%", height = "400px")
 ```
-
-
-## MSI Table -TY
-Creating a new table called 'MSI_Tbl' to join the Match Stats table and Item Table
-
-What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
- - match_rank_tbl : This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
- - MSI_Tbl : This data set will display the players detailed match stats which include kills for both enemy champions and monsters affiliated and include item purchase and summoner spells.
- - SMR_Tbl : This data set displays the players detailed 
 
 
 ```{r, echo=FALSE}
@@ -74,9 +68,6 @@ match_rank_tbl %>%
 ```
 
 
-## TMR Tbl -TY
-Created a new table called 'TMR_Tbl' to join Team Match Table and Match Table by MatchFk and MatchId.
-
 ```{r, echo = F}
 TMR_Tble %>%
   slice_head(n = 20) %>%
@@ -84,12 +75,6 @@ TMR_Tble %>%
   kable_styling() %>%
   scroll_box(width = "100%", height = "400px")
 ```
-
-
-## SMR tbl -VA
-
-The following table was created in order to join both the summoner match table and a match rank table.
-This table displays a smaller depiction 
 
 
 ```{r, echo=FALSE}
@@ -100,9 +85,6 @@ SMR_Tbl %>%
   scroll_box(width = "100%", height = "400px")
 ```
 
-
-## Tamana MSI_tbl and Match_rank_tbl dplyr and plot functions
-The plot shows the number of games that wins and loses 
 ```{r, echo = F} 
 MSI_Tbl%>%
   # should i group by queue type?
@@ -116,7 +98,6 @@ MSI_Tbl%>%
        y = "Number of Games")
 ```
 
-# Created a new column called SecondLane 
 ```{r, echo=FALSE}
 MSI_Tbl %>% 
    group_by(SummonerMatchFk) %>% 
@@ -157,9 +138,6 @@ rm(MSI_Tbl_doubles)
 
 ```
 
-#MSI_Tbl
-
-MSI_Tbl
 ```{r, echo=FALSE, eval=TRUE}
  MSI_Tbl %>%
   slice_head(n = 20) %>%
@@ -168,24 +146,244 @@ MSI_Tbl
   scroll_box(width = "100%", height = "400px")
 ```
 
-1. How many SummonerMatchFk play more than one lane
 
-This code shows how many player plays in more than one lane 
+## Lets Look at Team Stats!
+
+Why is this interesting? 
+
+Well in league of legends, **all sorts of kills are important.**
+
+-**Gold is the biggest objective**, and it is mainly gained through all sorts of minion kills and enemy champion kills, this allows for solo lane or paired players to buy items that are necessary to get stronger. 
+
+-**Baron kills** gives your whole team a chunk of gold and advanced stats for a period of time, leading to a higher chance of winning, **dragons** on the other hand do not provide gold but do enhance stats.
+
+-**Tower Kills** are important because you get gold and you get an advantage around the map, providing map pressure by allowing your minions to move up without restriction.  
+
+**Fun fact** there are several types of dragons: Infernal, Ocean, Mountain, Chemtec, Hextech, Cloud and Elder dragon.
+
 ```{r, echo=FALSE}
-MSI_Tbl %>%
-  group_by(SummonerMatchFk)%>%
-  summarise(num_lanes = n_distinct(Lane))%>% #count the unique lanes
-  filter(num_lanes > 1)%>%
-  summarise(total_players = n()) 
+#Team win statistics : mean, min, max for Kills, Baron, Rift Herald, Dragon, Towers
+
+Team_Winner_Stats <-Team_Winner_Tbl %>%
+  filter(Side %in% c("Red","Blue")) %>%
+  filter(QueueType %in% c("CLASSIC", "ARAM","SWIFTPLAY","ULTBOOK")) %>% 
+  group_by(Side, QueueType) %>% 
+  summarise(MeanKills = mean(Kills, na.rm = TRUE),
+            MinKills = min(Kills, na.rm = TRUE),
+            MaxKills = max(Kills, na.rm = TRUE),
+            MeanBaron = mean(BaronKills, na.rm = TRUE),
+            MinBaron = min(BaronKills, na.rm = TRUE),
+            MaxBaron = max(BaronKills, na.rm = TRUE),
+            MeanRiftHeraldKills = mean(RiftHeraldKills, na.rm = TRUE),
+            MinRiftHeraldKills = min(RiftHeraldKills, na.rm = TRUE),
+            MaxRiftHeraldKills = max(RiftHeraldKills, na.rm = TRUE),
+            MeanDragonKills = mean(DragonKills, na.rm = TRUE),
+            MinDragonKills = min(DragonKills, na.rm = TRUE),
+            MaxDragonKills = max(DragonKills, na.rm = TRUE),
+            MeanTowerKills = mean(TowerKills, na.rm = TRUE),
+            MinTowerKills = min(TowerKills, na.rm = TRUE),
+            MaxTowerKills = max(TowerKills, na.rm = TRUE)) 
+
+
+Team_Winner_Stats %>% 
+  rename('Queue Type' = QueueType) %>% 
+  rename('Mean Kills' = MeanKills) %>% 
+  rename('Min Kills' = MinKills) %>% 
+  rename('Max Kills'= MaxKills) %>% 
+  rename('Mean Baron' = MeanBaron) %>% 
+  rename('Min Baron' = MinBaron) %>% 
+  rename('Max Baron' = MaxBaron) %>% 
+  rename('Mean Rift Herald Kills' = MeanRiftHeraldKills) %>% 
+  rename('Min Rift Herald Kills' = MinRiftHeraldKills) %>% 
+  rename('Max Rift Herald Kills' = MaxRiftHeraldKills) %>% 
+  rename('Mean Dragon Kills' = MeanDragonKills) %>% 
+  rename('Min Dragon Kills' = MinDragonKills) %>% 
+  rename('Max Dragon Kills' = MaxDragonKills) %>% 
+  rename('Mean Tower Kills' = MeanTowerKills) %>% 
+  rename('Min Tower Kills' =MinTowerKills) %>% 
+  rename('Max Tower Kills' =MaxTowerKills) %>% 
+  kbl() %>%
+  kable_styling() %>%
+  scroll_box(width = "175%", height = "400px")
+
+
+```
+
+```{r, echo=FALSE}
+common_theme <- theme_minimal(base_size = 14) +
+  theme(
+    axis.title.y = element_text(size = 12, face = "bold"),
+    axis.title.x = element_text(size = 12, face = "bold"),
+    axis.text = element_text(size = 10)
+  )
+
+```
+
+### Mean of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
+
+Why is it that the mean for Baron, Rift and Dragon Kills is smaller than regular kills?
+
+Dragons spawn every 5 to 7 minutes throughout the game. 
+
+Rift Herald first spawn is at 15 minutes. 
+
+Baron's first spawn is at 25 min, if baron is defeated, the boost last about 3 mins. Then afterwards the baron will spawn every 5 to 6 minutes. 
+
+Game duration plays a big part in Summoners Rift Map (CLASSIC). 
+
+**Fun fact:** The first Baron must be defeated with at least 3-4 players, or else you will die. Afterwards 2 players is enough but it takes time to defeat Baron, not an easy tasks to do alone. 
+
+```{r, echo=FALSE}
+a1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+
+a2 <- ggplot(Team_Winner_Stats %>% 
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanBaron, fill = Side)) + geom_col(width = 1) + ggtitle("Average Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+
+a3 <- ggplot(Team_Winner_Stats %>% 
+               filter(QueueType != "ARAM") %>% 
+               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MeanRiftHeraldKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+
+a4 <- ggplot(Team_Winner_Stats %>% 
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanDragonKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+ 
+a5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanTowerKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
+
 ```
 
 
-2.Find the Mean, Median, Max, and Min for the following:
-- minions killed
-- TurretDmg
-- DmgTaken
-- DmgDealt
-- totalGold.
+```{r, echo= FALSE}
+grid.arrange(a1,a3,a4,a5,a2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Average Count")
+```
+
+
+Looking at Dragons vs Baron vs Rift Herald, we can see that Dragons are killed more frequently. Spawning is a factor, also you do not need many members to kill a dragon, unless it is the elder dragon. 
+
+**We can see that Aram and Classic both hold high mean kills, why is that?**
+
+###Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
+
+Max kills vary through map, as you can see 
+
+```{r, echo=FALSE}
+b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
+
+b2 <- ggplot(Team_Winner_Stats %>% 
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxBaron, fill = Side)) + geom_col(width = 1) + ggtitle("Max Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+
+b3 <- ggplot(Team_Winner_Stats %>% 
+               filter(QueueType != "ARAM") %>% 
+               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MaxRiftHeraldKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+
+b4 <- ggplot(Team_Winner_Stats %>% 
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxDragonKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+ 
+b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
+
+```
+
+
+```{r, echo=FALSE}
+grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count")
+
+```
+
+
+
+---
+
+### Team Game Duration 
+
+Lets go ahead and evaluate the Blue teams and Red teams 
+
+Blue Team
+- 
+-
+-
+
+```{r, echo=FALSE}
+ggplot(TMR_Tble %>% 
+         mutate(BlueWin = ifelse(BlueWin == 0,"Lose","Win")) %>% 
+         drop_na(QueueType) %>% 
+         drop_na(BlueWin), aes(x= GameDuration, y = BlueKills, color = BlueWin )) + geom_jitter(alpha = 0.4) + facet_wrap(~QueueType)
+
+```
+
+
+Red Team
+-
+-
+-
+
+```{r, echo=FALSE}
+ggplot(TMR_Tble %>% 
+         mutate(RedWin = ifelse(RedWin == 0,"Lose","Win")) %>% 
+         drop_na(QueueType) %>% 
+         drop_na(RedWin), aes(x= GameDuration, y = RedKills, color = RedWin )) + geom_jitter(alpha = 0.4) + facet_wrap(~QueueType)
+
+```
+
+
+
+What do we see? 
+
+```{r}
+TMR_Tble %>% 
+  mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)) %>% 
+  count(Winning_Team, wt = TotalKills) 
+
+```
+
+```{r, echo=FALSE}
+ggplot(TMR_Tble %>% 
+         mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)), aes(x = GameDuration, y = TotalKills)) + geom_jitter(alpha = 0.2)
+
+```
+
+
+
+## Winning Teams
+
+The kills on each winning side 
+
+```{r}
+Team_Winner_Tbl %>% 
+  count(Side, wt = Kills)
+```
+
+```{r, echo=FALSE}
+ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() 
+
+```
+
+```{r,echo=FALSE}
+
+ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density() + facet_wrap(~RankName)
+
+```
+
+
+```{r, echo=FALSE}
+ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_jitter( alpha= 0.5)
+
+```
+
+
+```{r, echo=FALSE}
+ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) + geom_point(alpha = 0.2))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r, echo = F}
 
@@ -217,7 +415,13 @@ MSI_Tbl%>%
 
 ```
 
-
+```{r, echo=FALSE}
+MSI_Tbl %>%
+  group_by(SummonerMatchFk)%>%
+  summarise(num_lanes = n_distinct(Lane))%>% #count the unique lanes
+  filter(num_lanes > 1)%>%
+  summarise(total_players = n()) 
+```
 
 Mean median min and max of minions killed: 
 ```{r}
@@ -571,203 +775,17 @@ ggplotly(ggplot(MSI_Tbl %>%
 
 1. TMR_tbl create column (boolean) indicating who won. Lets combine TMR with Champion Table 
 
-```{r, echo=FALSE}
-ggplot(TMR_Tble %>% 
-         mutate(BlueWin = ifelse(BlueWin == 0,"Lose","Win")) %>% 
-         drop_na(QueueType) %>% 
-         drop_na(BlueWin), aes(x= GameDuration, y = BlueKills, color = BlueWin )) + geom_jitter(alpha = 0.4) + facet_wrap(~QueueType)
-
-```
-
-
-```{r, echo=FALSE}
-ggplot(TMR_Tble %>% 
-         mutate(RedWin = ifelse(RedWin == 0,"Lose","Win")) %>% 
-         drop_na(QueueType) %>% 
-         drop_na(RedWin), aes(x= GameDuration, y = RedKills, color = RedWin )) + geom_jitter(alpha = 0.4) + facet_wrap(~QueueType)
-
-```
-
-```{r}
-TMR_Tble %>% 
-  mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)) %>% 
-  count(Winning_Team, wt = TotalKills) 
-
-```
-
-```{r, echo=FALSE}
-ggplot(TMR_Tble %>% 
-         mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)), aes(x = GameDuration, y = TotalKills)) + geom_jitter(alpha = 0.2)
-
-```
-
-
-```{r}
-Team_Winner_Tbl %>% 
-  count(Side, wt = Kills)
-```
-
-```{r, echo=FALSE}
-ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_jitter( alpha= 0.5)
-
-```
-
-```{r, echo=FALSE}
-ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) + geom_point(alpha = 0.2))
-
-```
 
 
 
 
-2. TMR_tbl Filter teams with winning arams, classics based on rank. Bar graph & scatter plot x = rank, y = # of wins, color by queue types, density. face wrap
-
-Let us look at all winning teams from each map type.
-```{r, echo=FALSE}
-#source(here::here("WinningTeams","app.R"))
-#shinyApp(ui, server) 
-#head(Team_Winner_Tbl, n = 10) 
-```
 
 
-3. TMR_tbl Filter winning teams, most used champion in red team and blue team 
-
-```{r, echo=FALSE}
-ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() 
-
-```
-
-```{r,echo=FALSE}
-
-ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density() + facet_wrap(~RankName)
-
-```
 
 
-```{r, echo=FALSE}
-common_theme <- theme_minimal(base_size = 14) +
-  theme(
-    axis.title.y = element_text(size = 12, face = "bold"),
-    axis.title.x = element_text(size = 12, face = "bold"),
-    axis.text = element_text(size = 10)
-  )
-
-```
 
 
-```{r, echo=FALSE}
-#Team win statistics : mean, min, max forKills, Baron, Rift Herald, Dragon, Towers
 
-Team_Winner_Stats <-Team_Winner_Tbl %>%
-  filter(Side %in% c("Red","Blue")) %>%
-  filter(QueueType %in% c("CLASSIC", "ARAM","SWIFTPLAY","ULTBOOK")) %>% 
-  group_by(Side, QueueType) %>% 
-  summarise(MeanKills = mean(Kills, na.rm = TRUE),
-            MinKills = min(Kills, na.rm = TRUE),
-            MaxKills = max(Kills, na.rm = TRUE),
-            MeanBaron = mean(BaronKills, na.rm = TRUE),
-            MinBaron = min(BaronKills, na.rm = TRUE),
-            MaxBaron = max(BaronKills, na.rm = TRUE),
-            MeanRiftHeraldKills = mean(RiftHeraldKills, na.rm = TRUE),
-            MinRiftHeraldKills = min(RiftHeraldKills, na.rm = TRUE),
-            MaxRiftHeraldKills = max(RiftHeraldKills, na.rm = TRUE),
-            MeanDragonKills = mean(DragonKills, na.rm = TRUE),
-            MinDragonKills = min(DragonKills, na.rm = TRUE),
-            MaxDragonKills = max(DragonKills, na.rm = TRUE),
-            MeanTowerKills = mean(TowerKills, na.rm = TRUE),
-            MinTowerKills = min(TowerKills, na.rm = TRUE),
-            MaxTowerKills = max(TowerKills, na.rm = TRUE)) 
-
-
-Team_Winner_Stats %>% 
-  rename('Queue Type' = QueueType) %>% 
-  rename('Mean Kills' = MeanKills) %>% 
-  rename('Min Kills' = MinKills) %>% 
-  rename('Max Kills'= MaxKills) %>% 
-  rename('Mean Baron' = MeanBaron) %>% 
-  rename('Min Baron' = MinBaron) %>% 
-  rename('Max Baron' = MaxBaron) %>% 
-  rename('Mean Rift Herald Kills' = MeanRiftHeraldKills) %>% 
-  rename('Min Rift Herald Kills' = MinRiftHeraldKills) %>% 
-  rename('Max Rift Herald Kills' = MaxRiftHeraldKills) %>% 
-  rename('Mean Dragon Kills' = MeanDragonKills) %>% 
-  rename('Min Dragon Kills' = MinDragonKills) %>% 
-  rename('Max Dragon Kills' = MaxDragonKills) %>% 
-  rename('Mean Tower Kills' = MeanTowerKills) %>% 
-  rename('Min Tower Kills' =MinTowerKills) %>% 
-  rename('Max Tower Kills' =MaxTowerKills) %>% 
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "175%", height = "400px")
-
-
-```
-
-```{r, echo=FALSE}
-# Bar plot 
-# 
-# ggplotly(ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
-# ```
-# 
-# ```{r, echo=FALSE}
-# ggplotly(ggplot(Team_Winner_Stats %>% 
-#                   filter(QueueType!= "ARAM"), aes(x = QueueType, y = MeanBaron, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
-# ```
-# 
-# ```{r, echo=FALSE}
-# ggplotly(ggplot(Team_Winner_Stats %>% 
-#                   filter(QueueType!= "ARAM"), aes(x = QueueType, y = MeanRiftHeraldKills, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
-```
-
-# Mean of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
-
-```{r, echo=FALSE}
-a1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
-
-a2 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanBaron, fill = Side)) + geom_col(width = 1) + ggtitle("Average Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
-
-a3 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM") %>% 
-               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MeanRiftHeraldKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
-
-a4 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanDragonKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
- 
-a5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanTowerKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
-
-```
-
-
-```{r, echo= FALSE}
-grid.arrange(a1,a3,a4,a5,a2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Average Count")
-
-```
-
-#Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
-
-```{r, echo=FALSE}
-b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
-
-b2 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxBaron, fill = Side)) + geom_col(width = 1) + ggtitle("Max Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
-
-b3 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM") %>% 
-               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MaxRiftHeraldKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
-
-b4 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxDragonKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
- 
-b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
-
-```
-
-
-```{r, echo=FALSE}
-grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count")
-
-```
 
 7.each player and the amount of games they play per queue type 
 
