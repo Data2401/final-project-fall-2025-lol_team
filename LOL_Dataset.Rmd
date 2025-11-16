@@ -322,6 +322,7 @@ grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics",
 
 ```
 
+**Fun Fact**: Jungler usually kills the first dragon with the help of bottom and support.  
 
 ---
 
@@ -359,14 +360,14 @@ ggplot(TMR_Tble %>%
 
 
 
-What do we see? 
+**What do we see? **
 
 ```{r, echo=FALSE}
-
 TMR_Tble %>% 
-  mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)) %>% 
-  count(Winning_Team, wt = TotalKills) 
-
+  group_by(Winning_Team, QueueType) %>% 
+  drop_na(Winning_Team) %>% 
+  summarise(n=n()) %>% 
+  rename("Wins" = n)
 ```
 
 ```{r, echo=FALSE}
