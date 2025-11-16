@@ -28,13 +28,17 @@ A few key details to understand the following information provided.
 - **Minions**: little soldiers, each team gets little soldiers. 
 - **K/D/A**: Kills, Death, Assists
 
+### Functions used
+-Dplyr 
+-ggplot
+-plotly
+-Kable Extra
+-Grid Extra
+-Joined functions
 
 ## Combined (Joined) Data
 
 What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
- - **match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
- - **MSI_Tbl**: This data set will display the players detailed match stats which include kills for both enemy champions and monsters affiliated and include item purchase and summoner spells.
- - **SMR_Tbl**: This data set displays the players key detailed match stats.
  
  
 ```{r setup, include=FALSE}
@@ -59,7 +63,7 @@ source("R_Data_Prep.R")
 
 ```
 
-
+**ChampionTbl** is the original dataset. 
 ```{r, echo=FALSE}
 championTbl %>%
   slice_head(n = 20) %>%           
@@ -68,7 +72,7 @@ championTbl %>%
   scroll_box(width = "100%", height = "400px")
 ```
 
-
+**match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
 ```{r, echo=FALSE}
 match_rank_tbl %>%
   slice_head(n = 20) %>%
@@ -78,6 +82,7 @@ match_rank_tbl %>%
 ```
 
 
+**TMR_Tble**: This table is a combined data of one original csv file and a combined data set. TeamMatchTbl and match_rank_tbl
 ```{r, echo = F}
 TMR_Tble %>%
   slice_head(n = 20) %>%
@@ -87,6 +92,7 @@ TMR_Tble %>%
 ```
 
 
+**SMR_Tbl**: This table displays the players key detailed match stats.
 ```{r, echo=FALSE}
 SMR_Tbl %>%
   slice_head(n = 20) %>%
@@ -95,6 +101,18 @@ SMR_Tbl %>%
   scroll_box(width = "100%", height = "400px")
 ```
 
+
+**Team_Winner_Tbl**: This table only shows teams that have won from TMR_Tble.
+```{r, echo=FALSE}
+ Team_Winner_Tbl %>%
+  slice_head(n = 20) %>%
+  kbl() %>%
+  kable_styling() %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+
+**MSI_Tbl**: This table set will display the players detailed match stats which include kills for both enemy champions and monsters affiliated and include item purchase and summoner spells.
 ```{r, echo = F} 
 MSI_Tbl%>%
   # should i group by queue type?
@@ -107,6 +125,7 @@ MSI_Tbl%>%
        x = "Teams", 
        y = "Number of Games")
 ```
+
 
 ```{r, echo=FALSE}
 MSI_Tbl %>% 
@@ -155,6 +174,7 @@ rm(MSI_Tbl_doubles)
   kable_styling() %>%
   scroll_box(width = "100%", height = "400px")
 ```
+
 
 
 ## Lets Look at Team Stats!
