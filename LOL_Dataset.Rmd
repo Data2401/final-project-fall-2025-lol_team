@@ -856,7 +856,7 @@ A lot of players fall under Master for Rank, almost double the amount of emerald
 
 Classic or Summoners rift is the top most played map. Why do we think that is? 
 
-**Fun Fact**: Summoners rift has two queue styles. Normal and Ranked, Normal is a more casual gameplay and it does not affect your rank, while ranked is very competitive and tracks players progress by promoting players or demoting their rank. 
+**Fun Fact**: Summoners rift has two queue styles. Normal and Ranked, Normal is a more casual game play and it does not affect your rank, while ranked is very competitive and tracks players progress by promoting or demoting their rank. 
 
 ```{r, echo=FALSE}
 #each player and the amount of games they play per queue type 
