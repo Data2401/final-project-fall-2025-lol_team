@@ -373,7 +373,8 @@ TMR_Tble %>%
 ```{r, echo=FALSE}
 
 ggplot(TMR_Tble %>% 
-         mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)), aes(x = GameDuration, y = TotalKills)) + geom_jitter(alpha = 0.2)
+         mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)) %>%
+         drop_na(Winning_Team), aes(x = GameDuration, y = TotalKills, color = Winning_Team)) + geom_jitter(alpha = 0.2) +facet_wrap(~QueueType)
 
 ```
 
