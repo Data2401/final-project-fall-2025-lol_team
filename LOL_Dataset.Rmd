@@ -17,14 +17,24 @@ https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner
 - The data comes from Kaggle.com
 
 ##Introduction 
-This dataset provides comprehensive match and player information from League of Legends, one of the world’s most popular multiplayer online battle arena (MOBA) games. It features data from 35,000 matches and over 78,000 player records, covering various in-game aspects such as champion choices, performance metrics, match results, and other gameplay statistics. This dataset consist of 7 tables: MatchStatsTbl, TeamMatchStatsTbl, MatchTbl, RankTble, ChampionTbl, ItemTbl, SummonerTbl, and SummonerMatchTbl. 
+The data downloaded provides comprehensive match and player information from League of Legends, one of the world’s most popular multi-player online battle arena (MOBA) games. It features data from 35,000 matches and over 78,000 player records, covering various in-game aspects such as champion choices, performance metrics, match results, and other gameplay statistics. This dataset consist of 7 tables: MatchStatsTbl, TeamMatchStatsTbl, MatchTbl, RankTble, ChampionTbl, ItemTbl, SummonerTbl, and SummonerMatchTbl. 
+
+A few key details to understand the following information provided. 
+
+-**Champs or Champions** : The characters that players play within the game.
+-**Queue Type**: Map selection or game style. ( 5v5, 2v2 1v1)
+-**Lane**: Players dictate which lane they would like to play in certain maps such as classic.
+-**Rank**: Level of player, Higher rank better player. 
+- **Minions**: little soldiers, each team gets little soldiers. 
+- **K/D/A**: Kills, Death, Assists
+
 
 ## Combined (Joined) Data
 
 What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
- - match_rank_tbl : This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
- - MSI_Tbl : This data set will display the players detailed match stats which include kills for both enemy champions and monsters affiliated and include item purchase and summoner spells.
- - SMR_Tbl : This data set displays the players detailed 
+ - **match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
+ - **MSI_Tbl**: This data set will display the players detailed match stats which include kills for both enemy champions and monsters affiliated and include item purchase and summoner spells.
+ - **SMR_Tbl**: This data set displays the players key detailed match stats.
  
  
 ```{r setup, include=FALSE}
@@ -262,7 +272,7 @@ Looking at Dragons vs Baron vs Rift Herald, we can see that Dragons are killed m
 
 ###Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
-Max kills vary through map, as you can see 
+Max kills vary through map, as you can see not 
 
 ```{r, echo=FALSE}
 b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
@@ -315,6 +325,7 @@ Red Team
 -
 
 ```{r, echo=FALSE}
+
 ggplot(TMR_Tble %>% 
          mutate(RedWin = ifelse(RedWin == 0,"Lose","Win")) %>% 
          drop_na(QueueType) %>% 
@@ -326,7 +337,8 @@ ggplot(TMR_Tble %>%
 
 What do we see? 
 
-```{r}
+```{r, echo=FALSE}
+
 TMR_Tble %>% 
   mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)) %>% 
   count(Winning_Team, wt = TotalKills) 
@@ -334,6 +346,7 @@ TMR_Tble %>%
 ```
 
 ```{r, echo=FALSE}
+
 ggplot(TMR_Tble %>% 
          mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)), aes(x = GameDuration, y = TotalKills)) + geom_jitter(alpha = 0.2)
 
