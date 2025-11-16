@@ -382,12 +382,33 @@ ggplot(TMR_Tble %>%
 
 ## Winning Teams
 
-The kills on each winning side 
+Lets look at the winning teams more deeply.
+
+**This table shows that the Blue team has more overall kills than the Red team.**
 
 ```{r}
 Team_Winner_Tbl %>% 
-  count(Side, wt = Kills)
+  count(Side, wt = Kills) %>% 
+  rename(Kills = n)
 ```
+
+```{r, echo=FALSE}
+ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_jitter( alpha= 0.5)
+
+```
+
+
+```{r, echo=FALSE}
+ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) + geom_point(alpha = 0.2))
+
+```
+
+
+**What does the curve mean?**
+-The height of the line tells you how common a particular game duration is.
+- Taller areas = more games lasted around that length.
+- Shorter areas = fewer games lasted around that length
+
 
 ```{r, echo=FALSE}
 ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() 
@@ -400,17 +421,6 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density(
 
 ```
 
-
-```{r, echo=FALSE}
-ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_jitter( alpha= 0.5)
-
-```
-
-
-```{r, echo=FALSE}
-ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) + geom_point(alpha = 0.2))
-
-```
 
 
 
