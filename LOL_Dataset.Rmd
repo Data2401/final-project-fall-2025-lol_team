@@ -147,8 +147,6 @@ MSI_Tbl %>%
 - DmgDealt
 - totalGold.
 
-
-mean, median, min, and max of DmgDealt:
 ```{r, echo = F}
 
 MSI_Tbl%>%
