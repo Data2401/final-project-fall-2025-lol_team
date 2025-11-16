@@ -259,7 +259,7 @@ Rift Herald first spawn is at 15 minutes.
 
 Baron's first spawn is at 25 min, if baron is defeated, the boost last about 3 mins. Then afterwards the baron will spawn every 5 to 6 minutes. 
 
-Game duration plays a big part in Summoners Rift Map (CLASSIC). 
+Game duration plays a big part in Summoners Rift Map (CLASSIC) and other maps as well such as ARAM. 
 
 **Fun fact:** The first Baron must be defeated with at least 3-4 players, or else you will die. Afterwards 2 players is enough but it takes time to defeat Baron, not an easy tasks to do alone. 
 
@@ -292,7 +292,12 @@ Looking at Dragons vs Baron vs Rift Herald, we can see that Dragons are killed m
 
 ###Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
-Max kills vary through map, as you can see not 
+Max kills vary through map, as you can see not that many kills in swiftplay, some maps have shorter and more difficult objectives during game, making it more difficult to kill. 
+
+We did not include ARAM for Baron, Dragon and Rift Herald kills. 
+- This is simple is because they do not have those monsters in that type of QUEUETYPE
+- Also you might see CHERRY missing, this is also important to point out, they are an arena type of map. Their teams consist of 2 players instead of the typical 5.
+
 
 ```{r, echo=FALSE}
 b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
@@ -316,7 +321,6 @@ b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Sid
 grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count")
 
 ```
-
 
 
 ---
@@ -569,10 +573,6 @@ grid.arrange(mean1, mean2, mean3, mean4, mean5, nrow=5) + theme(axis.text = elem
 grid.arrange(med1, med2, med3, med4, med5, nrow=5)
 grid.arrange(max1, max2, max3, max4, max5, nrow=5)
 ```
-
-
-3. Create new column (boolean) for indicating win or lose. Filter to win and lose only and create a ggplots.
-
 
 
 
