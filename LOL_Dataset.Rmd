@@ -7,7 +7,6 @@ output:
     self_contained: false      
     highlight: null
     pandoc_args: ["--syntax-highlighting=none"]
-#runtime: shiny
 ---
 
 ## About the dataset 
@@ -22,7 +21,13 @@ This dataset provides comprehensive match and player information from League of 
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  eval = FALSE   
+)
+
 library(tidyverse)
 library(tidyr)
 library(dplyr)
@@ -34,23 +39,8 @@ library(shiny)
 library(here)
 library(knitr)
 source("R_Data_Prep.R")
-#data_dir <- here::here(".")
 
 ```
-
-## Read csv files
-```{r, echo = FALSE}
-
-# championTbl <- read_tbl("ChampionTbl")
-# itemTbl<- read_tbl("ItemTbl")
-# matchStatsTbl <- read_tbl("MatchStatsTbl")
-# matchTbl <- read_tbl("MatchTbl")
-# RankTbl <- read_tbl("RankTbl")
-# SummonerMatchTbl <- read_tbl("SummonerMatchTbl")
-# TeamMatchTbl <- read_tbl("TeamMatchTbl")
-
-```
-
 
 ## Modified Tables
 ## Champion Table -VA
@@ -68,9 +58,6 @@ championTbl %>%
 
 ## MSI Table -TY
 Creating a new table called 'MSI_Tbl' to join the Match Stats table and Item Table
-
-
-
 
 What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
  - match_rank_tbl : This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
@@ -115,11 +102,65 @@ SMR_Tbl %>%
 
 
 ## Tamana MSI_tbl and Match_rank_tbl dplyr and plot functions
+The plot shows the number of games that wins and loses 
+```{r, echo = F} 
+MSI_Tbl%>%
+  # should i group by queue type?
+  mutate(Teams = ifelse(Win==0 , "Lose", "Win"), 
+         Teams = factor(Teams, levels = c("Win", "Lose")))%>%
+  drop_na(Teams)%>% 
+  ggplot(aes(x=Teams, fill=Teams)) + 
+  geom_bar() +
+  labs(title = "Win vs. Lose", 
+       x = "Teams", 
+       y = "Number of Games")
+```
+
+# Created a new column called SecondLane 
+```{r, echo=FALSE}
+MSI_Tbl %>% 
+   group_by(SummonerMatchFk) %>% 
+  filter(n()>1) %>%   
+  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>% 
+  arrange(SummonerMatchFk) %>%   
+  filter(n()>1) %>% 
+  group_by(SummonerMatchFk) %>% 
+  mutate(tally_person = row_number()) %>% 
+  filter(tally_person == 2) -> table2
+
+MSI_Tbl %>% 
+   group_by(SummonerMatchFk) %>% 
+  filter(n()>1) %>%   
+  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>% 
+  arrange(SummonerMatchFk) %>%   
+  filter(n()>1) %>% 
+  group_by(SummonerMatchFk) %>% 
+  mutate(tally_person = row_number()) %>% 
+  filter(tally_person == 1) %>%  
+  select(SummonerMatchFk, SecondLane = Lane) -> table1
+
+MSI_Tbl_doubles <- full_join(table1, table2, join_by(SummonerMatchFk))
+rm(table1)
+rm(table2)
+
+
+MSI_Tbl <- MSI_Tbl %>% 
+  group_by(SummonerMatchFk) %>% 
+  anti_join(MSI_Tbl_doubles, join_by(SummonerMatchFk)) %>%
+  mutate(SecondLane = NA) %>% 
+  rbind(MSI_Tbl_doubles) %>% 
+  distinct(SummonerMatchFk, .keep_all = TRUE) %>%
+  select(-tally_person, -item1, -item2,-item3, -item4, -item5,-item6) %>% 
+  arrange(SummonerMatchFk) 
+
+rm(MSI_Tbl_doubles)
+
+```
 
 #MSI_Tbl
 
 MSI_Tbl
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=TRUE}
  MSI_Tbl %>%
   slice_head(n = 20) %>%
   kbl() %>%
@@ -135,8 +176,7 @@ MSI_Tbl %>%
   group_by(SummonerMatchFk)%>%
   summarise(num_lanes = n_distinct(Lane))%>% #count the unique lanes
   filter(num_lanes > 1)%>%
-  summarise(total_players = n())
-
+  summarise(total_players = n()) 
 ```
 
 
@@ -287,7 +327,7 @@ max5
 ```
 
 Combining multiple plots for the averages, medians, and maximums of minions killed, Turret Damage killed, Damage Taken, Damage Dealt, and Total Gold
-```{r}
+```{r, echo=False}
 grid.arrange(mean1, mean2, mean3, mean4, mean5, nrow=5) + theme(axis.text = element_text(angle = 45, hjust = 0))
 grid.arrange(med1, med2, med3, med4, med5, nrow=5)
 grid.arrange(max1, max2, max3, max4, max5, nrow=5)
@@ -297,60 +337,7 @@ grid.arrange(max1, max2, max3, max4, max5, nrow=5)
 3. Create new column (boolean) for indicating win or lose. Filter to win and lose only and create a ggplots.
 
 
-The plot shows the number of games that wins and loses 
-```{r, echo = F} 
-MSI_Tbl%>%
-  # should i group by queue type?
-  mutate(Teams = ifelse(Win==0 , "Lose", "Win"), 
-         Teams = factor(Teams, levels = c("Win", "Lose")))%>%
-  drop_na(Teams)%>% 
-  ggplot(aes(x=Teams, fill=Teams)) + 
-  geom_bar() +
-  labs(title = "Win vs. Lose", 
-       x = "Teams", 
-       y = "Number of Games")
-```
 
-# Created a new column called SecondLane 
-```{r, echo=FALSE}
-MSI_Tbl %>% 
-   group_by(SummonerMatchFk) %>% 
-  filter(n()>1) %>%   
-  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>% 
-  arrange(SummonerMatchFk) %>%   
-  filter(n()>1) %>% 
-  group_by(SummonerMatchFk) %>% 
-  mutate(tally_person = row_number()) %>% 
-  filter(tally_person == 2) -> table2
-
-MSI_Tbl %>% 
-   group_by(SummonerMatchFk) %>% 
-  filter(n()>1) %>%   
-  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>% 
-  arrange(SummonerMatchFk) %>%   
-  filter(n()>1) %>% 
-  group_by(SummonerMatchFk) %>% 
-  mutate(tally_person = row_number()) %>% 
-  filter(tally_person == 1) %>%  
-  select(SummonerMatchFk, SecondLane = Lane) -> table1
-
-MSI_Tbl_doubles <- full_join(table1, table2, join_by(SummonerMatchFk))
-rm(table1)
-rm(table2)
-
-
-MSI_Tbl <- MSI_Tbl %>% 
-  group_by(SummonerMatchFk) %>% 
-  anti_join(MSI_Tbl_doubles, join_by(SummonerMatchFk)) %>%
-  mutate(SecondLane = NA) %>% 
-  rbind(MSI_Tbl_doubles) %>% 
-  distinct(SummonerMatchFk, .keep_all = TRUE) %>%
-  select(-tally_person, -item1, -item2,-item3, -item4, -item5,-item6) %>% 
-  arrange(SummonerMatchFk) 
-
-rm(MSI_Tbl_doubles)
-
-```
 
 4. MSI_tbl
 filter NAs from item names, 
@@ -471,7 +458,7 @@ champs <- SMR_Tbl %>%
 ```
 
 The plot shows the top 10 champions from left to right
-```{r}
+```{r,echo = FALSE}
 Top_champs <- champs %>% 
   slice_max(num_champs, n = 10)
 
@@ -489,23 +476,27 @@ rm(champs)
 
 ```{r, echo=FALSE}
 #Second Lane Data analysis for MSI Kills Column plot
-ggplotly(ggplot( MSI_Tbl %>% 
-  select(SecondLane,kills,SummonerMatchFk) %>% 
-  drop_na(SecondLane) %>% 
-  group_by(SecondLane) %>%
-  count(SecondLane, wt = kills) %>% 
-  rename(kills = n), 
-  aes(x = SecondLane, y = kills, fill = SecondLane, text = paste("Count:", after_stat(y))))
-  + geom_col(), 
+ggplotly(
+  ggplot( 
+    MSI_Tbl %>% 
+    select(SecondLane,kills,SummonerMatchFk) %>% 
+    drop_na(SecondLane) %>% 
+    group_by(SecondLane) %>%
+    count(SecondLane, wt = kills) %>% 
+    rename(kills = n), 
+  aes(x = SecondLane, y = kills, fill = SecondLane, text = paste("Count:", after_stat(y)))
+  ) + geom_col(), 
   tooltip = "text", 
-  na.rm = TRUE )
+  na.rm = TRUE 
+  )
 
 ```
   
 
 ```{r, echo=FALSE}
 #Lane Data analysis for MSI Kills Column plot
-ggplotly(ggplot( MSI_Tbl %>% 
+ggplotly(
+  ggplot( MSI_Tbl %>% 
   select(Lane,kills,SummonerMatchFk) %>% 
   drop_na(Lane) %>% 
   group_by(Lane) %>%
@@ -714,16 +705,16 @@ Team_Winner_Stats %>%
 
 ```{r, echo=FALSE}
 # Bar plot 
-# ```{r}
+# 
 # ggplotly(ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
 # ```
 # 
-# ```{r}
+# ```{r, echo=FALSE}
 # ggplotly(ggplot(Team_Winner_Stats %>% 
 #                   filter(QueueType!= "ARAM"), aes(x = QueueType, y = MeanBaron, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
 # ```
 # 
-# ```{r}
+# ```{r, echo=FALSE}
 # ggplotly(ggplot(Team_Winner_Stats %>% 
 #                   filter(QueueType!= "ARAM"), aes(x = QueueType, y = MeanRiftHeraldKills, fill = Side,text = paste("Count:", after_stat(y)))) + geom_col() + facet_wrap(~Side), tooltip = "text")
 ```
@@ -755,7 +746,7 @@ grid.arrange(a1,a3,a4,a5,a2, nrow = 3, ncol = 2, top = "Team Winner Statistics",
 
 #Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
-```{r}
+```{r, echo=FALSE}
 b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
 
 b2 <- ggplot(Team_Winner_Stats %>% 
@@ -773,7 +764,7 @@ b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Sid
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count")
 
 ```
@@ -790,14 +781,14 @@ Player_Games <- SMR_Tbl %>%
 ```
 
 How many players play in each queue type, a player can play multiple queue types in league of legends. No map restriction.
-```{r}
+```{r, echo=FALSE}
 
 ggplotly(ggplot(Player_Games %>% 
                   drop_na(QueueType),aes(x = QueueType, fill = QueueType, text = paste("Count:", after_stat(count)))) + geom_bar(), tooltip = "text", na.rm = TRUE)
 
 ```
 
-```{r}
+```{r, echo=FALSE}
 Player_Games %>%
   group_by(RankName) %>% 
   distinct(SummonerFk,.keep_all = TRUE) %>% 
@@ -808,7 +799,7 @@ Player_Games %>%
 
 What rank players fall in in this data set. 
 
-```{r}
+```{r, echo=FALSE}
 ggplotly(ggplot(Player_Games %>%
   group_by(RankName) %>% 
   distinct(SummonerFk,.keep_all = TRUE) %>% 
