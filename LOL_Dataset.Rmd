@@ -1005,3 +1005,4 @@ A single player can participate in multiple queue types, and they can switch bet
 Overall, the data set highlights the importance of strategic decision-making, teamwork, and individual performance in League of Legends. Success is not determined by a single factor, but rather a combination of gold management, damage output, vision control, champion selection, and effective coordination.
 
 
+
