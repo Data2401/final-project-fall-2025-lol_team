@@ -4,9 +4,12 @@ author: "Tamana Yaqoubi, Veronica Alviso"
 date: "2025-11-04"
 output: 
   slidy_presentation:
-    self_contained: false      
+
+    self_contained: false
     highlight: null
-    
+    fig_width: 10
+    fig_height: 6
+    fig_retina: 3
 ---
 
 # About the dataset 
@@ -79,50 +82,61 @@ library(shiny)
 library(here)
 library(knitr)
 library(grid)
+library(DT)
 source("R_Data_Prep.R")
 
 ```
 
 **ChampionTbl** is the original dataset. 
 ```{r, echo=FALSE}
-championTbl %>%
-  slice_head(n = 10) 
+DT::datatable(
+  head(championTbl, 10),
+  options = list(pageLength = 10)
+)
 ```
 
 **match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
 ```{r, echo=FALSE}
-match_rank_tbl %>%
-  slice_head(n = 10)
+
+DT::datatable(
+  head(match_rank_tbl, 10),
+  options = list(pageLength = 10)
+)
 ```
 
 
 **TMR_Tble**: Team match rank table is a combined data of one original csv file and a combined data set. TeamMatchTbl and match_rank_tbl. Shows detailed team statistics. 
 ```{r, echo=FALSE}
-TMR_Tble %>%
-  slice_head(n = 10) %>%
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "400px")
+# TMR_Tble %>%
+#   slice_head(n = 10)
+#   #%>%
+#   # kbl() %>%
+#   # kable_styling() %>%
+#   # scroll_box(width = "100%", height = "400px")
 ```
 
+```{r}
+DT::datatable(
+  head(TMR_Tble, 10),
+  options = list(pageLength = 10)
+)
+```
 
 **SMR_Tbl**: This table displays the players key detailed match stats.
 ```{r, echo=FALSE}
-SMR_Tbl %>%
-  slice_head(n = 10) %>%
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "400px")
+DT::datatable(
+  head(SMR_Tbl, 10),
+  options = list(pageLength = 10)
+)
 ```
 
 
 **Team_Winner_Tbl**: This table only shows teams that have won from TMR_Tble.
 ```{r, echo=FALSE}
- Team_Winner_Tbl %>%
-  slice_head(n = 10) %>%
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "400px")
+DT::datatable(
+  head(Team_Winner_Tbl, 10),
+  options = list(pageLength = 10)
+)
 ```
 
 
@@ -171,11 +185,10 @@ rm(MSI_Tbl_doubles)
 ```
 
 ```{r, echo=FALSE}
- MSI_Tbl %>%
-  slice_head(n = 10) %>%
-kbl() %>%
-kable_styling() %>%
-scroll_box(width = "100%", height = "400px")
+DT::datatable(
+  head(MSI_Tbl, 10),
+  options = list(pageLength = 10)
+)
 ```
 
 
@@ -220,7 +233,7 @@ Team_Winner_Stats <-Team_Winner_Tbl %>%
             MaxTowerKills = max(TowerKills, na.rm = TRUE)) 
 
 
-Team_Winner_Stats %>% 
+TW_RENAMED <- Team_Winner_Stats %>% 
   rename('Queue Type' = QueueType) %>% 
   rename('Mean Kills' = MeanKills) %>% 
   rename('Min Kills' = MinKills) %>% 
@@ -236,11 +249,17 @@ Team_Winner_Stats %>%
   rename('Max Dragon Kills' = MaxDragonKills) %>% 
   rename('Mean Tower Kills' = MeanTowerKills) %>% 
   rename('Min Tower Kills' =MinTowerKills) %>% 
-  rename('Max Tower Kills' =MaxTowerKills) %>% 
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "175%", height = "400px")
-
+  rename('Max Tower Kills' =MaxTowerKills) 
+ 
+DT::datatable(
+  TW_RENAMED,
+  options = list(
+    scrollX = TRUE,
+    pageLength = 10,
+    lengthMenu = c(10, 20, 30),
+    autoWidth = TRUE
+  )
+)
 
 ```
 
@@ -515,7 +534,7 @@ A players stats are important, they can break or make a team.
 
 ```{r, echo=FALSE}
 
-MSI_Tbl%>%
+TEMP_MSI_RENAME <-MSI_Tbl%>%
   ungroup() %>% 
   summarise('Avg Gold Total'= mean(TotalGold, na.rm = TRUE),
             'Median Total Gold' = median(TotalGold, na.rm = TRUE), 
@@ -536,10 +555,18 @@ MSI_Tbl%>%
             'Avg Turret Damage Dealt' = mean(TurretDmgDealt, na.rm = TRUE),
             'Median Turret Damage Dealt' = median(TurretDmgDealt, na.rm = TRUE),
             'Min Turret Damage Dealt' = min(TurretDmgDealt, na.rm = TRUE), 
-            'Max Turret Damage Dealt' = max(TurretDmgDealt, na.rm = TRUE)) %>%
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "170px")
+            'Max Turret Damage Dealt' = max(TurretDmgDealt, na.rm = TRUE)) 
+ 
+
+DT::datatable(
+  TEMP_MSI_RENAME,
+  options = list(
+    scrollX = TRUE,
+    pageLength = 10,
+    lengthMenu = c(10, 20, 30),
+    autoWidth = TRUE
+  )
+)
 
 ```
 
@@ -785,6 +812,7 @@ ggplot(MSI_Tbl %>% mutate(Win = ifelse(Win == 1, "Win", "Lose")) %>% drop_na(vis
   labs(title = "Vision Score vs Deaths by Lane Role",
        x= "Vision Score", y = "Deaths") + facet_wrap(~Win) + theme_dark()
 ```
+
 
 **Vision leads to map control** by providing information on enemy positions, which helps the player and team to make better decisions. 
 
