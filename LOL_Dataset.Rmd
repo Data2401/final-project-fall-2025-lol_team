@@ -915,5 +915,10 @@ ggplotly(ggplot(Player_Games %>%
 
 
 ## Conclusion 
+From the League of Legends dataset, we can see that teams or players who earn more gold, deal more damage, and have higher vision scores generally have a greater chance of winning. More gold allows players to buy stronger items, which improves their performance in fights. Players can choose the same champion as others, so champions are not tied to a single player.
 
+Game duration is strongly linked to kill counts for both Red and Blue teams. As matches last longer, the total number of kills consistently increases, especially for the winning team. Although different queue types vary in their typical match length, the overall pattern remains the same: longer games result in more kills.
+A single player can participate in multiple queue types, and they can switch between them freely with no limitations.
+
+Overall, the data set highlights the importance of strategic decision-making, teamwork, and individual performance in League of Legends. Success is not determined by a single factor, but rather a combination of gold management, damage output, vision control, champion selection, and effective coordination.
 
