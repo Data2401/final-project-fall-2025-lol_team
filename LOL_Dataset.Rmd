@@ -2,22 +2,14 @@
 title: "LOL_Dataset_Project"
 author: "Tamana Yaqoubi, Veronica Alviso"
 date: "2025-11-04"
-<<<<<<< HEAD
+
 output:
   slidy_presentation:
-    self_contained: false
-    highlight: null
-  pdf_document: default
-=======
-output: 
-  slidy_presentation:
-
     self_contained: false
     highlight: null
     fig_width: 10
     fig_height: 6
     fig_retina: 3
->>>>>>> 94f98768633ad23dc4cb2766cdbfd888e144f180
 ---
 
 # About the dataset 
@@ -29,7 +21,7 @@ https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner
 - Includes team and player analysis providing insight stats in kills, deaths, assists, items, champion selections, game results, etc.  
 - All the data obtained is from Kaggle.com
 
-#Introduction 
+# Introduction 
 
 The data downloaded provides comprehensive match and player information from League of Legends, one of the world’s most popular multi-player online battle arena (MOBA) games. 
 
@@ -96,6 +88,7 @@ source("R_Data_Prep.R")
 ```
 
 **ChampionTbl** is the original dataset. 
+
 ```{r, echo=FALSE}
 DT::datatable(
   head(championTbl, 10),
@@ -104,6 +97,7 @@ DT::datatable(
 ```
 
 **match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
+
 ```{r, echo=FALSE}
 
 DT::datatable(
@@ -114,6 +108,7 @@ DT::datatable(
 
 
 **TMR_Tble**: Team match rank table is a combined data of one original csv file and a combined data set. TeamMatchTbl and match_rank_tbl. Shows detailed team statistics. 
+
 ```{r, echo=FALSE}
 # TMR_Tble %>%
 #   slice_head(n = 10)
@@ -129,8 +124,10 @@ DT::datatable(
   options = list(pageLength = 10)
 )
 ```
+---
 
 **SMR_Tbl**: This table displays the players key detailed match stats.
+
 ```{r, echo=FALSE}
 DT::datatable(
   head(SMR_Tbl, 10),
@@ -140,6 +137,7 @@ DT::datatable(
 
 
 **Team_Winner_Tbl**: This table only shows teams that have won from TMR_Tble.
+
 ```{r, echo=FALSE}
 DT::datatable(
   head(Team_Winner_Tbl, 10),
@@ -201,17 +199,17 @@ DT::datatable(
 
 
 
-#Lets Look at Team Stats!
+# Lets Look at Team Stats!
 
 Why is this interesting? 
 
 Well in league of legends, **all sorts of kills are important.**
 
--**Gold is the biggest objective**, and it is mainly gained through all sorts of minion kills and enemy champion kills, this allows for solo lane or paired players to buy items that are necessary to get stronger. 
+- **Gold is the biggest objective**, and it is mainly gained through all sorts of minion kills and enemy champion kills, this allows for solo lane or paired players to buy items that are necessary to get stronger. 
 
--**Baron kills** gives your whole team a chunk of gold and advanced stats for a period of time, leading to a higher chance of winning, **dragons** on the other hand do not provide gold but do enhance stats.
+- **Baron kills** gives your whole team a chunk of gold and advanced stats for a period of time, leading to a higher chance of winning, **dragons** on the other hand do not provide gold but do enhance stats.
 
--**Tower Kills** are important because you get gold and you get an advantage around the map, providing map pressure by allowing your minions to move up without restriction.  
+- **Tower Kills** are important because you get gold and you get an advantage around the map, providing map pressure by allowing your minions to move up without restriction.  
 
 
 **Fun fact** there are several types of dragons: Infernal, Ocean, Mountain, Chemtec, Hextech, Cloud and Elder dragon.
@@ -286,13 +284,13 @@ common_theme <- theme_minimal(base_size = 14) +
 
 Why is it that the mean for Baron, Rift and Dragon Kills is smaller than regular kills?
 
-Dragons spawn every 5 to 7 minutes throughout the game. 
+- Dragons spawn every 5 to 7 minutes throughout the game. 
 
-Rift Herald first spawn is at 15 minutes. 
+- Rift Herald first spawn is at 15 minutes. 
 
-Baron's first spawn is at 25 min, if baron is defeated, the boost last about 3 mins. Then afterwards the baron will spawn every 5 to 6 minutes. 
+- Baron's first spawn is at 25 min, if baron is defeated, the boost last about 3 mins. Then afterwards the baron will spawn every 5 to 6 minutes. 
 
-Game duration plays a big part in Summoners Rift Map (CLASSIC) and other maps as well such as ARAM. 
+- Game duration plays a big part in Summoners Rift Map (CLASSIC) and other maps as well such as ARAM. 
 
 **Fun fact:** The first Baron must be defeated with at least 3-4 players, or else you will die. Afterwards 2 players is enough but it takes time to defeat Baron, not an easy tasks to do alone. 
 
@@ -325,11 +323,11 @@ Looking at Dragons vs Baron vs Rift Herald, we can see that Dragons are killed m
 **We can see that Aram and Classic both hold high mean kills, why is that?**
 
 
-###Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
+### Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
 Max kills vary through map, as you can see not that many kills in swiftplay, some maps have shorter and more difficult objectives during game, making it more difficult to kill. 
 
-We did not include ARAM for Baron, Dragon and Rift Herald kills. 
+We **did not include ARAM** for Baron, Dragon and Rift Herald kills. 
 - This is simple is because they do not have those monsters in that type of QUEUETYPE
 - Also you might see CHERRY missing, this is also important to point out, they are an arena type of map. Their teams consist of 2 players instead of the typical 5.
 
@@ -358,7 +356,7 @@ grid.arrange(b1,b3,b4,b5,b2, nrow = 5, top = "Team Winner Statistics", left = "Q
 ```
 
 
-**Fun Fact**: Jungler usually kills the first dragon with the help of bottom and support.  
+**Fun Fact** : Jungler usually kills the first dragon with the help of bottom and support.  
 
 
 
@@ -366,7 +364,7 @@ grid.arrange(b1,b3,b4,b5,b2, nrow = 5, top = "Team Winner Statistics", left = "Q
 
 Lets go ahead and evaluate the Blue teams and Red teams 
 
-Blue Team
+**Blue Team**
 - In Aram, Blue teams seem to require more kills to win a game.
 - When Blue team has a lead in kills and the game duration is not long, they have a chance to win. 
 
@@ -385,7 +383,7 @@ ggplot(TMR_Tble %>%
 ```
 
 
-Red Team
+**Red Team**
 - The most difficult map for red team is ARAM. If they do not have a lead in kills early on they lose the game.
 - Same goes for CLASSIC queue types, red team wins when they have more kills early on. 
 
@@ -581,10 +579,9 @@ DT::datatable(
 
 **Fun Fact**: You basically can die from 3 to 4 consecutive turret hits in the early stages of the game. The damage increases by 40% for each shot (up to a maximum bonus of 120%)
 
----
 
 **A players role** is fundamental in scaling and advancing within the game. 
--A Classic game consists of 5 different roles (Top, Mid, Jungle, Bottom, Support) 
+- A Classic game consists of 5 different roles (Top, Mid, Jungle, Bottom, Support) 
 
 Why is it that Top lane on average deals more damage, kills, and receives more gold? 
 
@@ -939,7 +936,7 @@ It is interesting to see the amount of players that get online to play League of
 
 A lot of players fall under Master for Rank, almost double the amount of emerald the second top rank.
 
-Classic or Summoners rift is the top most played map. Why do we think that is? 
+- Classic or Summoners rift is the top most played map. Why do we think that is? 
 
 **Fun Fact**: Summoners rift has two queue styles. Normal and Ranked, Normal is a more casual game play and it does not affect your rank, while ranked is very competitive and tracks players progress by promoting or demoting their rank. 
 
