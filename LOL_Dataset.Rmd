@@ -61,10 +61,11 @@ What we did is join most of our data sets to have a more efficient data structur
  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE,
+  echo = FALSE,
   message = FALSE,
-  warning = FALSE
-  #eval = FALSE   
+  warning = FALSE,
+  #eval = FALSE 
+  cache   = TRUE 
 )
 
 library(tidyverse)
