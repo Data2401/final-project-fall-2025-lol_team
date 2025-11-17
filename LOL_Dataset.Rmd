@@ -3,7 +3,7 @@ title: "LOL_Dataset_Project"
 author: "Tamana Yaqoubi, Veronica Alviso"
 date: "2025-11-04"
 output: 
-  html_document:
+  slidy_presentation:
     self_contained: false      
     highlight: null
     
@@ -86,20 +86,20 @@ source("R_Data_Prep.R")
 **ChampionTbl** is the original dataset. 
 ```{r, echo=FALSE}
 championTbl %>%
-  slice_head(n = 20) 
+  slice_head(n = 10) 
 ```
 
 **match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
 ```{r, echo=FALSE}
 match_rank_tbl %>%
-  slice_head(n = 20)
+  slice_head(n = 10)
 ```
 
 
 **TMR_Tble**: Team match rank table is a combined data of one original csv file and a combined data set. TeamMatchTbl and match_rank_tbl. Shows detailed team statistics. 
 ```{r, echo=FALSE}
 TMR_Tble %>%
-  slice_head(n = 20) %>%
+  slice_head(n = 10) %>%
   kbl() %>%
   kable_styling() %>%
   scroll_box(width = "100%", height = "400px")
@@ -109,7 +109,7 @@ TMR_Tble %>%
 **SMR_Tbl**: This table displays the players key detailed match stats.
 ```{r, echo=FALSE}
 SMR_Tbl %>%
-  slice_head(n = 20) %>%
+  slice_head(n = 10) %>%
   kbl() %>%
   kable_styling() %>%
   scroll_box(width = "100%", height = "400px")
@@ -119,7 +119,7 @@ SMR_Tbl %>%
 **Team_Winner_Tbl**: This table only shows teams that have won from TMR_Tble.
 ```{r, echo=FALSE}
  Team_Winner_Tbl %>%
-  slice_head(n = 20) %>%
+  slice_head(n = 10) %>%
   kbl() %>%
   kable_styling() %>%
   scroll_box(width = "100%", height = "400px")
@@ -131,25 +131,25 @@ SMR_Tbl %>%
 
 
 ```{r, echo=FALSE}
-MSI_Tbl %>% 
-   group_by(SummonerMatchFk) %>% 
-  filter(n()>1) %>%   
-  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>% 
-  arrange(SummonerMatchFk) %>%   
-  filter(n()>1) %>% 
-  group_by(SummonerMatchFk) %>% 
-  mutate(tally_person = row_number()) %>% 
+MSI_Tbl %>%
+   group_by(SummonerMatchFk) %>%
+  filter(n()>1) %>%
+  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>%
+  arrange(SummonerMatchFk) %>%
+  filter(n()>1) %>%
+  group_by(SummonerMatchFk) %>%
+  mutate(tally_person = row_number()) %>%
   filter(tally_person == 2) -> table2
 
-MSI_Tbl %>% 
-   group_by(SummonerMatchFk) %>% 
-  filter(n()>1) %>%   
-  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>% 
-  arrange(SummonerMatchFk) %>%   
-  filter(n()>1) %>% 
-  group_by(SummonerMatchFk) %>% 
-  mutate(tally_person = row_number()) %>% 
-  filter(tally_person == 1) %>%  
+MSI_Tbl %>%
+   group_by(SummonerMatchFk) %>%
+  filter(n()>1) %>%
+  distinct(SummonerMatchFk, Lane, .keep_all = TRUE) %>%
+  arrange(SummonerMatchFk) %>%
+  filter(n()>1) %>%
+  group_by(SummonerMatchFk) %>%
+  mutate(tally_person = row_number()) %>%
+  filter(tally_person == 1) %>%
   select(SummonerMatchFk, SecondLane = Lane) -> table1
 
 MSI_Tbl_doubles <- full_join(table1, table2, join_by(SummonerMatchFk))
@@ -157,14 +157,14 @@ rm(table1)
 rm(table2)
 
 
-MSI_Tbl <- MSI_Tbl %>% 
-  group_by(SummonerMatchFk) %>% 
+MSI_Tbl <- MSI_Tbl %>%
+  group_by(SummonerMatchFk) %>%
   anti_join(MSI_Tbl_doubles, join_by(SummonerMatchFk)) %>%
-  mutate(SecondLane = NA) %>% 
-  rbind(MSI_Tbl_doubles) %>% 
+  mutate(SecondLane = NA) %>%
+  rbind(MSI_Tbl_doubles) %>%
   distinct(SummonerMatchFk, .keep_all = TRUE) %>%
-  select(-tally_person, -item1, -item2,-item3, -item4, -item5,-item6) %>% 
-  arrange(SummonerMatchFk) 
+  select(-tally_person, -item1, -item2,-item3, -item4, -item5,-item6) %>%
+  arrange(SummonerMatchFk)
 
 rm(MSI_Tbl_doubles)
 
@@ -172,10 +172,10 @@ rm(MSI_Tbl_doubles)
 
 ```{r, echo=FALSE}
  MSI_Tbl %>%
-  slice_head(n = 20) %>%
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "400px")
+  slice_head(n = 10) %>%
+kbl() %>%
+kable_styling() %>%
+scroll_box(width = "100%", height = "400px")
 ```
 
 
@@ -435,8 +435,8 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_j
 
 
 ```{r, echo=FALSE}
-ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) + 
-           geom_point(alpha = 0.2) + 
+ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) +
+           geom_point(alpha = 0.2) +
            labs(title = "Game Duration vs Kills by Queue Type", x = "Game Duration", y = "Kills"))
 
 ```
@@ -685,15 +685,15 @@ Why is it that NONE doesn't have the same amount of kills as other lanes?
 ```{r, echo=FALSE}
 #Lane Data analysis for MSI Kills Column plot
 ggplotly(
-  ggplot( MSI_Tbl %>% 
-  select(Lane,kills,SummonerMatchFk) %>% 
-  drop_na(Lane) %>% 
+  ggplot( MSI_Tbl %>%
+  select(Lane,kills,SummonerMatchFk) %>%
+  drop_na(Lane) %>%
   group_by(Lane) %>%
-  count(Lane, wt = kills) %>% 
-  rename(kills = n), 
+  count(Lane, wt = kills) %>%
+  rename(kills = n),
   aes(x = Lane, y = kills, fill = Lane, text = paste("Count:", after_stat(y))))
-  + geom_col() + labs(title= "Kills vs Lane", x = "Lane", y = "Kills"), 
-  tooltip = "text", 
+  + geom_col() + labs(title= "Kills vs Lane", x = "Lane", y = "Kills"),
+  tooltip = "text",
   na.rm = TRUE)
 ```
 
@@ -753,10 +753,6 @@ ggplot(VS, aes(x = Win, y = VS_avg, fill = Win)) +
 
 ```
 
-```{r, echo=FALSE}
-#Remove temp table VS
-rm(VS)
-```
 
 **Interestingly enough, vision score has a big impact on kills and deaths. **
 
@@ -765,7 +761,7 @@ rm(VS)
 #11. Analyze if higher visionScore mean more wins
 
 ggplot(MSI_Tbl %>% 
-         mutate(Win = ifelse(Win == 1, "Lose","Win")) %>% drop_na(Win), aes(y = kills, x = visionScore, color = Win)) +
+         mutate(Win = ifelse(Win == 1, "Win","Lose")) %>% drop_na(Win), aes(y = kills, x = visionScore, color = Win)) +
   geom_jitter(alpha = 0.3, width = 0.2) + scale_color_manual(values = c("Win" = "blue", "Lose" = "magenta"))+
   labs(title = "Kills by Vision Score",
        x = "Vision Score",  y= "Kills")
@@ -893,8 +889,8 @@ Top_champs <- champs %>%
 
 
 ```{r,echo=FALSE}
-ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() + 
-           labs(title = "Top 10 Champions", 
+ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() +
+           labs(title = "Top 10 Champions",
                 x = "Champions Name",
                 y = "Number of Champions"), tooltip = "text")
 ```
@@ -928,7 +924,7 @@ Player_Games <- SMR_Tbl %>%
 ```{r, echo=FALSE}
 #How many players play in each queue type, a player can play multiple queue types in league of legends. No map restriction.
 
-ggplotly(ggplot(Player_Games %>% 
+ggplotly(ggplot(Player_Games %>%
                   drop_na(QueueType),aes(x = QueueType, fill = QueueType, text = paste("Count:", after_stat(count)))) + geom_bar() + labs(title = "Queue Type vs Players", x = "Queue Type", y = "Number of Players"), tooltip = "text", na.rm = TRUE)
 
 ```
