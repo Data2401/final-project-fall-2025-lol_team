@@ -857,32 +857,44 @@ new_temp_MSI_Tbl <- temp_MSI_Tbl %>%
   summarise(Total_Items=n()) %>% 
   ungroup()
 
-#Find most popular items
-new_temp_MSI_Tbl%>% 
-  slice_max(Total_Items, n=10)
+# #Find most popular items
+# new_temp_MSI_Tbl%>% 
+#   slice_max(Total_Items, n=10)
 
-#least popular item
-new_temp_MSI_Tbl %>% 
+"least popular item"
+
+least_items <-new_temp_MSI_Tbl %>% 
   slice_min(Total_Items, n = 10, with_ties = FALSE)
+
+DT::datatable(
+  least_items,
+  rownames = FALSE,
+  options = list( scrollX = TRUE, pageLength = 15, autoWidth = TRUE, columnDefs = list(list(className = "dt-center", targets = "_all"))))
 
 #join temp_MSI_Tbl and new_temp_MSI_Tbl to get the mean and median of items a player holds.
 N_MSI_Tbl <- full_join(temp_MSI_Tbl, new_temp_MSI_Tbl, by = join_by(ItemNames)) 
 
-
 #Mean and median of items a player holds
-new_temp_MSI_Tbl %>% 
+"Mean and Median of items a player holds"
+
+ ntms <- new_temp_MSI_Tbl %>% 
   drop_na(ItemNames) %>% 
   group_by(ItemNames) %>% 
   summarise(Items_used_avg = mean(Total_Items), 
             Items_used_median = median(Total_Items)) %>% 
   head(n=15)
 
+DT::datatable(
+  ntms,
+  rownames = FALSE,
+  options = list( scrollX = TRUE, pageLength = 15, autoWidth = TRUE, columnDefs = list(list(className = "dt-center", targets = "_all"))))
 
 ```
 
 
 
 
+**Top 10 Popular Items**
 
 
 ```{r, echo=FALSE}
@@ -890,8 +902,7 @@ new_temp_MSI_Tbl %>%
 
 Top_Items <- new_temp_MSI_Tbl %>%
   drop_na(ItemNames) %>%
-  slice_max(Total_Items, n = 10) %>%
-  arrange(desc(Total_Items))
+  slice_max(Total_Items, n = 10) 
 
 DT::datatable(
   Top_Items,
@@ -939,8 +950,7 @@ champs <- SMR_Tbl %>%
 #Find the top 10 champions
 
 Top_champs <- champs %>% 
-  slice_max(num_champs, n = 10) %>% 
-  arrange(desc(Total_Items))
+  slice_max(num_champs, n = 10)
 
 DT::datatable(
   Top_champs,
