@@ -361,7 +361,7 @@ grid.arrange(b1,b3,b4,b5,b2, nrow = 5, top = "Team Winner Statistics", left = "Q
 
 
 
-#Team Game Duration 
+# Team Game Duration 
 
 Lets go ahead and evaluate the Blue teams and Red teams 
 
@@ -837,7 +837,6 @@ ggplot(MSI_Tbl %>% mutate(Win = ifelse(Win == 1, "Win", "Lose")) %>% drop_na(vis
 Items are fundamental to scaling a champion. Some items are a non negotiable and are needed, such as boots.
 
 
-
 ```{r, echo=FALSE}
 #Removing NAs from the MSI_Tbl
 temp_MSI <- MSI_Tbl%>%
@@ -887,15 +886,27 @@ new_temp_MSI_Tbl %>%
 
 
 ```{r, echo=FALSE}
-#Plot top 10 popular items 
+#Find the top 10 popular items
 
-Top_Items <- new_temp_MSI_Tbl%>%
+Top_Items <- new_temp_MSI_Tbl %>%
   drop_na(ItemNames) %>%
-  slice_max(Total_Items, n = 10)
+  slice_max(Total_Items, n = 10) %>%
+  arrange(desc(Total_Items))
+
+DT::datatable(
+  Top_Items,
+  rownames = FALSE,
+  options = list(
+    scrollX   = TRUE,
+    pageLength = 10,
+    autoWidth = TRUE,
+    columnDefs = list(
+      list(className = 'dt-center', targets = "_all") )))
 ```
 
 
 ```{r, echo=FALSE}
+#Plot top 10 popular items 
 ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill = ItemNames, text = paste("Count:", after_stat(y)))) + geom_col() + geom_text(aes(label = Total_Items), 
             hjust = -0.2,           
             size = 3.5, 
@@ -914,23 +925,38 @@ ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill 
 
 
 ```{r,echo=FALSE}
-#Plot top 10 champions
+#Find the top 10 champions
 champs <- SMR_Tbl %>%
   group_by(ChampionName) %>% 
   summarise(num_champs = n())
+
+
+
 ```
 
 
 ```{r,echo = FALSE}
-#The plot shows the top 10 champions from left to right
+#Find the top 10 champions
 
 Top_champs <- champs %>% 
-  slice_max(num_champs, n = 10)
+  slice_max(num_champs, n = 10) %>% 
+  arrange(desc(Total_Items))
+
+DT::datatable(
+  Top_champs,
+  rownames = FALSE,
+  options = list(
+    scrollX   = TRUE,
+    pageLength = 10,
+    autoWidth = TRUE,
+    columnDefs = list(
+      list(className = 'dt-center', targets = "_all") )))
 ```
 
 
 
 ```{r,echo=FALSE}
+#Plot top 10 champions
 ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() +
            labs(title = "Top 10 Champions",
                 x = "Champions Name",
