@@ -3,10 +3,10 @@ title: "LOL_Dataset_Project"
 author: "Tamana Yaqoubi, Veronica Alviso"
 date: "2025-11-04"
 output:
-  pdf_document: default
-  html_document:
+  slidy_presentation:
     self_contained: false
     highlight: null
+  pdf_document: default
 ---
 
 # About the dataset 
@@ -650,7 +650,7 @@ max5 <- ggplot(m, aes(x = max_TotalGold, y = Lane, fill = Lane)) + geom_col(widt
 
 
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE,  fig.width=10, fig.height=12}
 #Combining multiple plots for the averages, medians, and maximums of minions killed, Turret Damage killed, Damage Taken, Damage Dealt, and Total Gold
 
 grid.arrange(mean1, mean2, mean3, mean4, mean5, nrow=5, top = textGrob("Average Damage Player Statistics", gp = gpar(fontsize = 20, fontface = "bold")),left = textGrob("Lane", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("Average",gp = gpar(fontsize = 16, fontface = "bold")))
@@ -956,7 +956,10 @@ ggplotly(ggplot(rank_data ,aes(x = RankName, y = Players, fill = RankName, text 
 
 
 # Conclusion 
-From the LOL dataset, we can conclude that teams or players that earn more gold, deal more damage, and higher vision score tend to have a higher chance of winning. Earning more gold means that they can buy more and stronger items. Different players can pick the same champion. Game duration is strongly related to kill counts for both red and blue teams. As game duration increases, the total kills rise consistently, specially for winning teams. Different queue types might have different duration but longer games will have more kills. A player can can play multiple queue types and there is no limit in switching between queue types. 
+From the League of Legends dataset, we can see that teams or players who earn more gold, deal more damage, and have higher vision scores generally have a greater chance of winning. More gold allows players to buy stronger items, which improves their performance in fights. Players can choose the same champion as others, so champions are not tied to a single player.
+
+Game duration is strongly linked to kill counts for both Red and Blue teams. As matches last longer, the total number of kills consistently increases, especially for the winning team. Although different queue types vary in their typical match length, the overall pattern remains the same: longer games result in more kills.
+A single player can participate in multiple queue types, and they can switch between them freely with no limitations.
 
 
 
