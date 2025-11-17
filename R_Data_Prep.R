@@ -49,7 +49,6 @@ MSI_Tbl <- full_join(MSI_Tbl, itemTbl,
 
 
 
-
 match_rank_tbl <- full_join(matchTbl,RankTbl,join_by(RankFk == RankId))
 
 TMR_Tble <- full_join(TeamMatchTbl, match_rank_tbl, by = join_by(MatchFk == MatchId))
