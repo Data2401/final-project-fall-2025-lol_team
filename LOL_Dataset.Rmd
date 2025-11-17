@@ -904,15 +904,7 @@ Top_Items <- new_temp_MSI_Tbl %>%
   drop_na(ItemNames) %>%
   slice_max(Total_Items, n = 10) 
 
-DT::datatable(
-  Top_Items,
-  rownames = FALSE,
-  options = list(
-    scrollX   = TRUE,
-    pageLength = 10,
-    autoWidth = TRUE,
-    columnDefs = list(
-      list(className = 'dt-center', targets = "_all") )))
+
 ```
 
 
@@ -952,28 +944,16 @@ champs <- SMR_Tbl %>%
 Top_champs <- champs %>% 
   slice_max(num_champs, n = 10)
 
-DT::datatable(
-  Top_champs,
-  rownames = FALSE,
-  options = list(
-    scrollX   = TRUE,
-    pageLength = 10,
-    autoWidth = TRUE,
-    columnDefs = list(
-      list(className = 'dt-center', targets = "_all") )))
+
 ```
 
 
-
-```{r,echo=FALSE}
-#Plot top 10 champions
+```{r, echo=FALSE}
 ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() +
            labs(title = "Top 10 Champions",
                 x = "Champions Name",
                 y = "Number of Champions"), tooltip = "text")
 ```
-
-
 
 # More about the players 
 
@@ -1039,6 +1019,8 @@ Game duration is strongly linked to kill counts for both Red and Blue teams. As 
 A single player can participate in multiple queue types, and they can switch between them freely with no limitations.
 
 Overall, the data set highlights the importance of strategic decision-making, teamwork, and individual performance in League of Legends. Success is not determined by a single factor, but rather a combination of gold management, damage output, vision control, champion selection, and effective coordination.
+
+
 
 
 
