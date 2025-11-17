@@ -322,6 +322,7 @@ Looking at Dragons vs Baron vs Rift Herald, we can see that Dragons are killed m
 
 **We can see that Aram and Classic both hold high mean kills, why is that?**
 
+---
 
 ### Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
@@ -492,20 +493,26 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density(
 ```{r, echo=FALSE}
 #Plot game duration as the Y value and Queue type as the X value, filter based on RankName
 
-match_rank_tbl %>%
-  group_by(RankName)%>%
-  summarise(Duration= n())
+rank_duration <- match_rank_tbl %>%
+  group_by(RankName) %>%
+  summarise(Games = n()) %>%
+  arrange(desc(Games))
+
+DT::datatable(
+  rank_duration,
+  options = list(
+    pageLength = 10,
+    autoWidth = TRUE,
+    scrollX = TRUE
+  ),
+  rownames = FALSE
+)
 ```
 
 
 
 ```{r, echo=FALSE}
 #Plot game duration as the Y value and Queue type as the X value, filter based on RankName
-
-match_rank_tbl %>%
-  group_by(RankName)%>%
-  summarise(Duration= n())
-
 ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) + 
   geom_density() + 
   labs(title = "Distribution of Game Duration by Queue Type", x = "Game Duration", y = "Density") 
@@ -990,7 +997,7 @@ ggplotly(ggplot(rank_data ,aes(x = RankName, y = Players, fill = RankName, text 
 # Conclusion 
 
 
-From the League of Legends dataset, we can see that teams or players who earn more gold, deal more damage, and have higher vision scores generally have a greater chance of winning. More gold allows players to buy stronger items, which improves their performance in fights. Players can choose the same champion as others, so champions are not tied to a single player.
+The data extracted from the League of Legends EU region, shows that teams or players who earn more gold, deal more damage, and have higher vision scores generally have a greater chance of winning. More gold allows players to buy stronger items, which improves their performance in fights. Players can choose the same champion as others, so champions are not tied to a single player.
 
 Game duration is strongly linked to kill counts for both Red and Blue teams. As matches last longer, the total number of kills consistently increases, especially for the winning team. Although different queue types vary in their typical match length, the overall pattern remains the same: longer games result in more kills.
 A single player can participate in multiple queue types, and they can switch between them freely with no limitations.

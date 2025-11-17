@@ -177,6 +177,9 @@ are killed more frequently. Spawning is a factor, also you do not need
 many members to kill a dragon, unless it is the elder dragon.</p>
 <p><strong>We can see that Aram and Classic both hold high mean kills,
 why is that?</strong></p>
+</div>
+<div class="slide section level1">
+
 <h3
 id="max-of-kills-baron-kills-rift-herald-kills-dragon-kills-tower-kills">Max
 of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills</h3>
@@ -240,34 +243,8 @@ areas = more games lasted around that length. - Shorter areas = fewer
 games lasted around that length</p>
 <p><img src="LOL_Dataset_files/figure-slidy/unnamed-chunk-22-1.png" width="960" /></p>
 <p><img src="LOL_Dataset_files/figure-slidy/unnamed-chunk-23-1.png" width="960" /></p>
-<pre><code>## # A tibble: 11 × 2
-##    RankName    Duration
-##    &lt;chr&gt;          &lt;int&gt;
-##  1 Bronze           784
-##  2 Challenger       223
-##  3 Diamond         2636
-##  4 Emerald         4551
-##  5 Gold            2697
-##  6 Grandmaster      956
-##  7 Iron             182
-##  8 Master         13688
-##  9 Platinum        4014
-## 10 Silver          1552
-## 11 Unranked        4138</code></pre>
-<pre><code>## # A tibble: 11 × 2
-##    RankName    Duration
-##    &lt;chr&gt;          &lt;int&gt;
-##  1 Bronze           784
-##  2 Challenger       223
-##  3 Diamond         2636
-##  4 Emerald         4551
-##  5 Gold            2697
-##  6 Grandmaster      956
-##  7 Iron             182
-##  8 Master         13688
-##  9 Platinum        4014
-## 10 Silver          1552
-## 11 Unranked        4138</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-6721571f166b5803804a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6721571f166b5803804a">{"x":{"filter":"none","vertical":false,"data":[["Master","Emerald","Unranked","Platinum","Gold","Diamond","Silver","Grandmaster","Bronze","Challenger","Iron"],[13688,4551,4138,4014,2697,2636,1552,956,784,223,182]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>RankName<\/th>\n      <th>Games<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1},{"name":"RankName","targets":0},{"name":"Games","targets":1}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 <p><img src="LOL_Dataset_files/figure-slidy/unnamed-chunk-25-1.png" width="960" /></p>
 <p><img src="LOL_Dataset_files/figure-slidy/unnamed-chunk-26-1.png" width="960" /></p>
 <p><strong>Fun Fact</strong>: Summoners Rift (CLASSIC) sometimes last 50
@@ -417,12 +394,12 @@ progress by promoting or demoting their rank.</p>
 </div>
 <div id="conclusion" class="slide section level1">
 <h1>Conclusion</h1>
-<p>From the League of Legends dataset, we can see that teams or players
-who earn more gold, deal more damage, and have higher vision scores
-generally have a greater chance of winning. More gold allows players to
-buy stronger items, which improves their performance in fights. Players
-can choose the same champion as others, so champions are not tied to a
-single player.</p>
+<p>The data extracted from the League of Legends EU region, shows that
+teams or players who earn more gold, deal more damage, and have higher
+vision scores generally have a greater chance of winning. More gold
+allows players to buy stronger items, which improves their performance
+in fights. Players can choose the same champion as others, so champions
+are not tied to a single player.</p>
 <p>Game duration is strongly linked to kill counts for both Red and Blue
 teams. As matches last longer, the total number of kills consistently
 increases, especially for the winning team. Although different queue
