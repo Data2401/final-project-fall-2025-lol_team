@@ -9,7 +9,7 @@ output:
     
 ---
 
-## About the dataset 
+# About the dataset 
 
 Source:
 https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner-data-80k-matches
@@ -18,7 +18,7 @@ https://www.kaggle.com/datasets/nathansmallcalder/lol-match-history-and-summoner
 - Includes team and player analysis providing insight stats in kills, deaths, assists, items, champion selections, game results, etc.  
 - All the data obtained is from Kaggle.com
 
-##Introduction 
+#Introduction 
 
 The data downloaded provides comprehensive match and player information from League of Legends, one of the world’s most popular multi-player online battle arena (MOBA) games. 
 
@@ -53,7 +53,7 @@ Data excluded: Summoner data due to privacy restrictions, the owners of the data
 - **Grid Extra**: Combining multiple grids
 - **Joined functions**: Used to build combined tables
 
-## Combined (Joined) Data
+# Combined (Joined) Data
 
 What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
  
@@ -184,7 +184,7 @@ rm(MSI_Tbl_doubles)
 
 
 
-## Lets Look at Team Stats!
+#Lets Look at Team Stats!
 
 Why is this interesting? 
 
@@ -196,7 +196,9 @@ Well in league of legends, **all sorts of kills are important.**
 
 -**Tower Kills** are important because you get gold and you get an advantage around the map, providing map pressure by allowing your minions to move up without restriction.  
 
+
 **Fun fact** there are several types of dragons: Infernal, Ocean, Mountain, Chemtec, Hextech, Cloud and Elder dragon.
+
 
 ```{r, echo=FALSE}
 #Team win statistics : mean, min, max for Kills, Baron, Rift Herald, Dragon, Towers
@@ -256,6 +258,7 @@ common_theme <- theme_minimal(base_size = 14) +
 
 ```
 
+
 ### Mean of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
 Why is it that the mean for Baron, Rift and Dragon Kills is smaller than regular kills?
@@ -269,6 +272,7 @@ Baron's first spawn is at 25 min, if baron is defeated, the boost last about 3 m
 Game duration plays a big part in Summoners Rift Map (CLASSIC) and other maps as well such as ARAM. 
 
 **Fun fact:** The first Baron must be defeated with at least 3-4 players, or else you will die. Afterwards 2 players is enough but it takes time to defeat Baron, not an easy tasks to do alone. 
+
 
 ```{r, echo=FALSE}
 a1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
@@ -296,6 +300,7 @@ grid.arrange(a1,a3,a4,a5,a2, nrow = 3, ncol = 2, top = "Team Winner Statistics",
 Looking at Dragons vs Baron vs Rift Herald, we can see that Dragons are killed more frequently. Spawning is a factor, also you do not need many members to kill a dragon, unless it is the elder dragon. 
 
 **We can see that Aram and Classic both hold high mean kills, why is that?**
+
 
 ###Max of Kills, Baron Kills, Rift Herald Kills, Dragon Kills, Tower Kills 
 
@@ -329,11 +334,12 @@ grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics",
 
 ```
 
+
 **Fun Fact**: Jungler usually kills the first dragon with the help of bottom and support.  
 
----
 
-### Team Game Duration 
+
+#Team Game Duration 
 
 Lets go ahead and evaluate the Blue teams and Red teams 
 
@@ -360,6 +366,7 @@ Red Team
 - The most difficult map for red team is ARAM. If they do not have a lead in kills early on they lose the game.
 - Same goes for CLASSIC queue types, red team wins when they have more kills early on. 
 
+
 ```{r, echo=FALSE}
 
 ggplot(TMR_Tble %>% 
@@ -377,6 +384,7 @@ ggplot(TMR_Tble %>%
 
 **What do we see? **
 
+
 ```{r, echo=FALSE}
 TMR_Tble %>% 
   group_by(Winning_Team, QueueType) %>% 
@@ -387,6 +395,7 @@ TMR_Tble %>%
 
 
 The following plot shows that most won games are from the red team. The kills are a combined total of both the winning and losing team. 
+
 
 ```{r, echo=FALSE}
 
@@ -402,10 +411,11 @@ ggplot(TMR_Tble %>%
 
 ```
 
+
 **Fun Fact**: Some champions are better at early stages of the game. Basically as the game duration continues the champion becomes more and more useless.
 
 
-## Winning Teams
+# Winning Teams
 
 Lets look at the winning teams more deeply.
 
@@ -417,12 +427,15 @@ Team_Winner_Tbl %>%
   rename(Kills = n)
 ```
 
+
+
 ```{r, echo=FALSE}
 ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_jitter( alpha= 0.5) +
   labs(title = "Game Duration vs Kills by Side", x = "Game Duration", y = "Kills") +
   scale_color_manual(values = c("Red" = "red", "Blue" = "blue"))
 
 ```
+
 
 
 ```{r, echo=FALSE}
@@ -444,6 +457,7 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() + 
 
 ```
 
+
 ```{r,echo=FALSE}
 
 ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density() +
@@ -452,6 +466,8 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density(
 
 ```
 
+
+
 ```{r, echo=FALSE}
 #Plot game duration as the Y value and Queue type as the X value, filter based on RankName
 
@@ -459,6 +475,8 @@ match_rank_tbl %>%
   group_by(RankName)%>%
   summarise(Duration= n())
 ```
+
+
 
 ```{r, echo=FALSE}
 ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) + 
@@ -471,11 +489,12 @@ ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) +
 ggplot(matchStatsTbl, aes(x= kills, color = Lane)) + geom_density() + facet_wrap(~Lane)
 ```
 
+
 **Fun Fact**: Summoners Rift (CLASSIC) sometimes last 50 minutes or longer.  
 
 
 
-## Lets look at Player Stats!
+# Lets look at Player Stats!
 
 Its amazing when you are stacked.
 
@@ -636,6 +655,10 @@ grid.arrange(med1, med2, med3, med4, med5, nrow=5, top = textGrob("Median Player
 grid.arrange(max1, max2, max3, max4, max5, nrow=5, top = textGrob("Max Player Statistics", gp = gpar(fontsize = 20, fontface = "bold")), left = textGrob("Lane", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("Max",gp = gpar(fontsize = 16, fontface = "bold")))
 
 
+```
+
+
+
 
 ```{r, echo=False}
 #Combining multiple plots for the averages, medians, and maximums of minions killed, Turret Damage killed, Damage Taken, Damage Dealt, and Total Gold
@@ -644,6 +667,8 @@ grid.arrange(mean1, mean2, mean3, mean4, mean5, nrow=5)
 grid.arrange(med1, med2, med3, med4, med5, nrow=5)
 grid.arrange(max1, max2, max3, max4, max5, nrow=5)
 ```
+
+
 **Fun Fact**: ARAM maps are only one lane, almost like a free for all. The map forces you to team fight as soon as the game starts.
 
 
