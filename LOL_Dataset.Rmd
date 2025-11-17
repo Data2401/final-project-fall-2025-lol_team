@@ -53,6 +53,7 @@ Data excluded: Summoner data due to privacy restrictions, the owners of the data
 - **Grid Extra**: Combining multiple grids
 - **Joined functions**: Used to build combined tables
 
+
 # Combined (Joined) Data
 
 What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
@@ -84,19 +85,13 @@ source("R_Data_Prep.R")
 **ChampionTbl** is the original dataset. 
 ```{r, echo=FALSE}
 championTbl %>%
-  slice_head(n = 20) %>%           
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "400px")
+  slice_head(n = 20) 
 ```
 
 **match_rank_tbl**: This table displays every match in EU region with the following information: Queue type, Rank, Game duration. 
 ```{r, echo=FALSE}
 match_rank_tbl %>%
-  slice_head(n = 20) %>%
-  kbl() %>%
-  kable_styling() %>%
-  scroll_box(width = "100%", height = "400px")
+  slice_head(n = 20)
 ```
 
 
@@ -330,7 +325,7 @@ b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Sid
 
 
 ```{r, echo=FALSE}
-grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count") + 
+grid.arrange(b1,b3,b4,b5,b2, nrow = 5, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count") 
 
 ```
 
@@ -479,14 +474,22 @@ match_rank_tbl %>%
 
 
 ```{r, echo=FALSE}
+#Plot game duration as the Y value and Queue type as the X value, filter based on RankName
+
+match_rank_tbl %>%
+  group_by(RankName)%>%
+  summarise(Duration= n())
+
 ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) + 
   geom_density() + 
-  labs(title = "Game Duration", x = "Game Duration", y = "Density") 
+  labs(title = "Distribution of Game Duration by Queue Type", x = "Game Duration", y = "Density") 
 ```
 
 
 ```{r, echo=FALSE}
-ggplot(matchStatsTbl, aes(x= kills, color = Lane)) + geom_density() + facet_wrap(~Lane)
+ggplot(matchStatsTbl, aes(x= kills, color = Lane)) + geom_density() + 
+  labs(title ="Distribution of Kills by Lane", x = "Kills", y = "Density") + 
+  facet_wrap(~Lane)
 ```
 
 
@@ -664,7 +667,7 @@ grid.arrange(max1, max2, max3, max4, max5, nrow=5, top = textGrob("Max Player St
 **Fun Fact**: ARAM maps are only one lane, almost like a free for all. The map forces you to team fight as soon as the game starts.
 
 
-## Player Lane Analysis
+# Player Lane Analysis
 
 Kills vs Lane
 - Top Lane has the most kills over any other lane
@@ -696,45 +699,7 @@ ggplotly(
 
 
 
-
-
-
-```{r, echo=FALSE}
-#Compare kills and Lane 
-
-ggplotly(ggplot(MSI_Tbl %>% 
-                  group_by(Lane) %>% 
-                  count(Lane, wt = kills) %>% 
-                  rename(kills = n), aes(x = Lane, y = kills, fill = Lane, text = paste("Count:", after_stat(y)))) + geom_col() + labs(title = "Kills vs Lane", x = "Lane", y = "kills"), tooltip= "text") 
-```
-
-
-
-
-
-
-
-```{r, echo=FALSE}
-#Plot game duration as the Y value and Queue type as the X value, filter based on RankName
-
-match_rank_tbl %>%
-  group_by(RankName)%>%
-  summarise(Duration= n())
-
-ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) + 
-  geom_density() + 
-  labs(title = "Distribution of Game Duration by Queue Type", x = "Game Duration", y = "Density") 
-```
-
-
-```{r, echo=FALSE}
-ggplot(matchStatsTbl, aes(x= kills, color = Lane)) + geom_density() + 
-  labs(title ="Distribution of Kills by Lane", x = "Kills", y = "Density") + 
-  facet_wrap(~Lane)
-```
-
-
-## Analyze Gold and Vision Score
+# Analyze Gold and Vision Score
 
 **GOLD, GOLD, GOLD!** 
 The more money you have the better the items. 
@@ -830,7 +795,7 @@ ggplot(MSI_Tbl %>% mutate(Win = ifelse(Win == 1, "Win", "Lose")) %>% drop_na(vis
 **Fun Fact**: Wards are placed throughout the map to gain vision. 
 
 
-## Top 10 Items and Champions
+# Top 10 Items and Champions
 
 Items are fundamental to scaling a champion. Some items are a non negotiable and are needed, such as boots.
 
@@ -892,16 +857,18 @@ new_temp_MSI_Tbl %>%
 Top_Items <- new_temp_MSI_Tbl%>%
   drop_na(ItemNames) %>%
   slice_max(Total_Items, n = 10)
-
 ```
 
 
 ```{r, echo=FALSE}
-ggplotly(ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill = ItemNames, text = paste("Count:", after_stat(y)))) + geom_col() + 
+ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill = ItemNames, text = paste("Count:", after_stat(y)))) + geom_col() + geom_text(aes(label = Total_Items), 
+            hjust = -0.2,           
+            size = 3.5, 
+            color = "black")+
            labs(
-             title ="Top 10 Items",
+             title ="Top 10 Items", 
              x = "Item Names",
-             y = "Total Items"), tooltip = "text") + theme(axis.text.y = element_text(angle = 45, vjust = 0))
+             y = "Total Items") + coord_flip()+ ylim(0, max(Top_Items$Total_Items) * 1.2)
 
 ``` 
 
@@ -922,6 +889,8 @@ Top_champs <- champs %>%
   slice_max(num_champs, n = 10)
 ```
 
+
+
 ```{r,echo=FALSE}
 ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_champs, fill = ChampionName, text = paste("Count:", after_stat(y)))) + geom_col() + 
            labs(title = "Top 10 Champions", 
@@ -931,7 +900,7 @@ ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_
 
 
 
-## More about the players 
+# More about the players 
 
 It is interesting to see the amount of players that get online to play League of Legends. 
 
@@ -965,31 +934,29 @@ ggplotly(ggplot(Player_Games %>%
 
 
 ```{r, echo=FALSE}
-ggplotly(ggplot(Player_Games %>%
+
+rank_levels <- c(
+  "Challenger", "Grandmaster", "Master",
+  "Diamond", "Emerald", "Platinum",
+  "Gold", "Silver", "Bronze", "Iron", "Unranked"
+)
+
+rank_data <- Player_Games %>%
   group_by(RankName) %>% 
-  distinct(SummonerFk,.keep_all = TRUE) %>% 
-  summarise(n=n()) %>% 
-  drop_na(RankName) %>% 
-  rename(Players = n),aes(x = RankName, y = Players, fill = RankName, text = paste("Count:", after_stat(y)))) + geom_col() + labs(title = "Rank Name vs Players", x = "Rank Name", y = "Players"), tooltip = "text", na.rm = TRUE)
+  distinct(SummonerFk, .keep_all = TRUE) %>% 
+  summarise(Players = n()) %>% 
+  drop_na(RankName) %>%
+  mutate(RankName = factor(RankName, levels = rank_levels))
+
+
+ggplotly(ggplot(rank_data ,aes(x = RankName, y = Players, fill = RankName, text = paste("Count:", after_stat(y)))) + geom_col() + labs(title = "Rank Name vs Players", x = "Rank Name", y = "Players"), tooltip = "text")
 
 ```
 
 
 
-## Conclusion 
+# Conclusion 
 
 
-```{r, echo=FALSE}
-#Remove temporary MSI tables not needed
-rm(temp_MSI)
-rm(Top_Items)
-rm(new_temp_MSI_Tbl)
-rm(N_MSI_Tbl)
-rm(temp_MSI_Tbl)
-```
 
-```{r, echo=FALSE}
-#Remove extra tables not needed 
-rm(Top_champs)
-rm(champs)
-```
+
