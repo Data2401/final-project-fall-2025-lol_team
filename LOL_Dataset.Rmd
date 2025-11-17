@@ -875,7 +875,8 @@ new_temp_MSI_Tbl %>%
   group_by(ItemNames) %>% 
   summarise(Items_used_avg = mean(Total_Items), 
             Items_used_median = median(Total_Items)) %>% 
-  head(n=15)
+  head(10)
+  
 
 
 ```
@@ -901,7 +902,7 @@ DT::datatable(
     pageLength = 10,
     autoWidth = TRUE,
     columnDefs = list(
-      list(className = 'dt-center', targets = "_all") )))
+      list(className = 'dt-center', targets = "_all"))))
 ```
 
 
@@ -936,21 +937,21 @@ champs <- SMR_Tbl %>%
 
 
 ```{r,echo = FALSE}
-#Find the top 10 champions
+#Select top 10 champions
 
 Top_champs <- champs %>% 
   slice_max(num_champs, n = 10) %>% 
-  arrange(desc(Total_Items))
+  arrange(desc(ChampionName))
 
-DT::datatable(
+datatable(
   Top_champs,
   rownames = FALSE,
   options = list(
-    scrollX   = TRUE,
+    scrollX    = TRUE, 
     pageLength = 10,
-    autoWidth = TRUE,
+    autoWidth  = TRUE,
     columnDefs = list(
-      list(className = 'dt-center', targets = "_all") )))
+      list(className = 'dt-center', targets = "_all"))))
 ```
 
 
