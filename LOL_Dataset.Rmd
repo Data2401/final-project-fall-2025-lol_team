@@ -831,8 +831,6 @@ Items are fundamental to scaling a champion. Some items are a non negotiable and
 
 
 
-
-
 ```{r, echo=FALSE}
 #Removing NAs from the MSI_Tbl
 temp_MSI <- MSI_Tbl%>%
@@ -901,6 +899,10 @@ ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill 
              y = "Total Items") + coord_flip()+ ylim(0, max(Top_Items$Total_Items) * 1.2)
 
 ``` 
+
+
+
+**Champions** in the data below show that the most popular are from the bottom lane. These are called AD carry's, they tend to be always in meta and are popular among different rank levels.
 
 
 
