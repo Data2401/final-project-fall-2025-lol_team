@@ -2,11 +2,11 @@
 title: "LOL_Dataset_Project"
 author: "Tamana Yaqoubi, Veronica Alviso"
 date: "2025-11-04"
-output: 
+output:
+  pdf_document: default
   html_document:
-    self_contained: false      
+    self_contained: false
     highlight: null
-    
 ---
 
 # About the dataset 
@@ -956,7 +956,7 @@ ggplotly(ggplot(rank_data ,aes(x = RankName, y = Players, fill = RankName, text 
 
 
 # Conclusion 
-
+From the LOL dataset, we can conclude that teams or players that earn more gold, deal more damage, and higher vision score tend to have a higher chance of winning. Earning more gold means that they can buy more and stronger items. Different players can pick the same champion. Game duration is strongly related to kill counts for both red and blue teams. As game duration increases, the total kills rise consistently, specially for winning teams. Different queue types might have different duration but longer games will have more kills. A player can can play multiple queue types and there is no limit in switching between queue types. 
 
 
 
