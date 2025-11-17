@@ -645,6 +645,8 @@ med5 <- ggplot(m, aes(x = median_TotalGold, y = Lane, fill = Lane)) + geom_col(w
 max5 <- ggplot(m, aes(x = max_TotalGold, y = Lane, fill = Lane)) + geom_col(width = 1) + ggtitle("Maximum Total Gold Per Lane")+ common_theme +labs(x = NULL, y = NULL)  + guides(fill = "none")
 ```
 
+
+
 ```{r, echo=FALSE, eval=TRUE}
 #Combining multiple plots for the averages, medians, and maximums of minions killed, Turret Damage killed, Damage Taken, Damage Dealt, and Total Gold
 
@@ -657,16 +659,6 @@ grid.arrange(max1, max2, max3, max4, max5, nrow=5, top = textGrob("Max Player St
 
 ```
 
-
-
-
-```{r, echo=False}
-#Combining multiple plots for the averages, medians, and maximums of minions killed, Turret Damage killed, Damage Taken, Damage Dealt, and Total Gold
-
-grid.arrange(mean1, mean2, mean3, mean4, mean5, nrow=5) 
-grid.arrange(med1, med2, med3, med4, med5, nrow=5)
-grid.arrange(max1, max2, max3, max4, max5, nrow=5)
-```
 
 
 **Fun Fact**: ARAM maps are only one lane, almost like a free for all. The map forces you to team fight as soon as the game starts.
@@ -699,11 +691,6 @@ ggplotly(
   + geom_col() + labs(title= "Kills vs Lane", x = "Lane", y = "Kills"), 
   tooltip = "text", 
   na.rm = TRUE)
-```
-
-
-  na.rm = TRUE )
-
 ```
 
 
@@ -816,9 +803,7 @@ ggplot(MSI_Tbl %>%
   geom_jitter(alpha = 0.3, width = 0.2) + scale_color_manual(values = c("Win" = "blue", "Lose" = "magenta"))+
   labs(title = "Kills by Vision Score",
        x = "Vision Score",  y= "Kills")
-         mutate(Win = ifelse(Win == 0, "Lose","Win")), aes(x = visionScore, color = Win)) + geom_density(alpha = 0.4) + 
-         labs(title = "Vision Score: Winning vs Losing Teams",
-              x= "Vision Score", y = "Density")
+         
 ```
 
 
@@ -955,6 +940,8 @@ A lot of players fall under Master for Rank, almost double the amount of emerald
 Classic or Summoners rift is the top most played map. Why do we think that is? 
 
 **Fun Fact**: Summoners rift has two queue styles. Normal and Ranked, Normal is a more casual game play and it does not affect your rank, while ranked is very competitive and tracks players progress by promoting or demoting their rank. 
+
+
 
 ```{r, echo=FALSE}
 #each player and the amount of games they play per queue type 
