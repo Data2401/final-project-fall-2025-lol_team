@@ -6,7 +6,7 @@ output:
   html_document:
     self_contained: false      
     highlight: null
-    pandoc_args: ["--syntax-highlighting=none"]
+    
 ---
 
 ## About the dataset 
@@ -746,7 +746,7 @@ ggplot(MSI_Tbl %>% mutate(Win = ifelse(Win == 1, "Win", "Lose")) %>% drop_na(vis
 
 ## Top 10 Items and Champions
 
-
+Items are fundamental to scaling a champion. Some items are a non negotiable and are needed, such as boots.
 
 
 
@@ -769,7 +769,8 @@ temp_MSI_Tbl <- MSI_Tbl%>%
 new_temp_MSI_Tbl <- temp_MSI_Tbl %>%
   drop_na(ItemNames) %>% 
   group_by(ItemNames) %>% 
-  summarise(Total_Items=n())
+  summarise(Total_Items=n()) %>% 
+  ungroup()
 
 #Find most popular items
 new_temp_MSI_Tbl%>% 
@@ -777,7 +778,7 @@ new_temp_MSI_Tbl%>%
 
 #least popular item
 new_temp_MSI_Tbl %>% 
-  slice_min(Total_Items)
+  slice_min(Total_Items, n = 10, with_ties = FALSE)
 
 #join temp_MSI_Tbl and new_temp_MSI_Tbl to get the mean and median of items a player holds.
 N_MSI_Tbl <- full_join(temp_MSI_Tbl, new_temp_MSI_Tbl, by = join_by(ItemNames)) 
@@ -788,7 +789,8 @@ new_temp_MSI_Tbl %>%
   drop_na(ItemNames) %>% 
   group_by(ItemNames) %>% 
   summarise(Items_used_avg = mean(Total_Items), 
-            Items_used_median = median(Total_Items))
+            Items_used_median = median(Total_Items)) %>% 
+  head(n=15)
 
 
 ```
