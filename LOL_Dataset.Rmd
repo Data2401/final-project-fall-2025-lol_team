@@ -61,6 +61,13 @@ Data excluded: Summoner data due to privacy restrictions, the owners of the data
 
 What we did is join most of our data sets to have a more efficient data structure. The following data sets were created:
  
+ Tables formed were : 
+ - MSI_Tbl
+ - match_rank_tbl
+ - TMR_Tble
+ - SMR_Tbl
+ - Team_Winner_Tbl
+ 
  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -296,19 +303,19 @@ Why is it that the mean for Baron, Rift and Dragon Kills is smaller than regular
 
 
 ```{r, echo=FALSE}
-a1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+a1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Average Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
 
 a2 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanBaron, fill = Side)) + geom_col(width = 1) + ggtitle("Average Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanBaron, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Average Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
 
 a3 <- ggplot(Team_Winner_Stats %>% 
                filter(QueueType != "ARAM") %>% 
-               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MeanRiftHeraldKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MeanRiftHeraldKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Average Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
 
 a4 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanDragonKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MeanDragonKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Average Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
  
-a5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanTowerKills, fill = Side)) + geom_col(width = 1) + ggtitle("Average Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
+a5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanTowerKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Average Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
 
 ```
 
@@ -334,25 +341,25 @@ We **did not include ARAM** for Baron, Dragon and Rift Herald kills.
 
 
 ```{r, echo=FALSE}
-b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
+b1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Max Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL)  + guides(fill = "none")
 
 b2 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxBaron, fill = Side)) + geom_col(width = 1) + ggtitle("Max Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxBaron, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Max Baron Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
 
 b3 <- ggplot(Team_Winner_Stats %>% 
                filter(QueueType != "ARAM") %>% 
-               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MaxRiftHeraldKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+               filter(MeanRiftHeraldKills != 0), aes(x = QueueType, y = MaxRiftHeraldKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Max Rift Herald Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
 
 b4 <- ggplot(Team_Winner_Stats %>% 
-               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxDragonKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
+               filter(QueueType != "ARAM"), aes(x = QueueType, y = MaxDragonKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Max Dragon Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
  
-b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Side)) + geom_col(width = 1) + ggtitle("Max Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
+b5 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MaxTowerKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Max Tower Kills") + coord_flip() + common_theme + labs(y = NULL, x = NULL) 
 
 ```
 
 
 ```{r, echo=FALSE}
-grid.arrange(b1,b3,b4,b5,b2, nrow = 5, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count") 
+grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics", left = "Queue Type", bottom = "Max Count") 
 
 ```
 
@@ -375,7 +382,7 @@ ggplot(TMR_Tble %>%
          mutate(BlueWin = ifelse(BlueWin == 0,"Lose","Win")) %>% 
          drop_na(QueueType) %>% 
          drop_na(BlueWin), aes(x= GameDuration, y = BlueKills, color = BlueWin )) + 
-  geom_jitter(alpha = 0.4) + 
+  geom_jitter(alpha = 0.2) + 
   labs(title = "Game Duration vs Blue Kills by Queue Type",
        x = "Game Duration", 
        y = "Blue Kills") +
@@ -394,7 +401,7 @@ ggplot(TMR_Tble %>%
 ggplot(TMR_Tble %>% 
          mutate(RedWin = ifelse(RedWin == 0,"Lose","Win")) %>% 
          drop_na(QueueType) %>% 
-         drop_na(RedWin), aes(x= GameDuration, y = RedKills, color = RedWin )) + geom_jitter(alpha = 0.4) +
+         drop_na(RedWin), aes(x= GameDuration, y = RedKills, color = RedWin )) + geom_jitter(alpha = 0.2) +
   labs(title = "Game Duration vs Red Kills by Queue Type", 
        x = "Game Duration", 
        y = "Red Kills") + 
@@ -424,7 +431,7 @@ The following plot shows that most won games are from the red team. The kills ar
 ggplot(TMR_Tble %>% 
          mutate(TotalKills = rowSums(across(c(RedKills, BlueKills)), na.rm = TRUE)) %>%
          drop_na(Winning_Team), aes(x = GameDuration, y = TotalKills, color = Winning_Team)) +
-  geom_jitter(alpha = 0.2) +
+  geom_jitter(alpha = 0.08) +
   labs(title = "Game Duration vs Total Kills by Queue Type", 
        x= "Game Duration", 
        y = "Total Kills") +
@@ -479,6 +486,13 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() + 
 
 ```
 
+```{r, echo=FALSE}
+Team_Winner_Tbl$RankName <- factor(
+  Team_Winner_Tbl$RankName,
+  levels = c("Unranked","Iron","Bronze","Silver","Gold","Platinum","Emerald","Diamond",
+             "Master","Grandmaster","Challenger"))
+```
+
 
 ```{r,echo=FALSE}
 
@@ -515,7 +529,7 @@ DT::datatable(
 #Plot game duration as the Y value and Queue type as the X value, filter based on RankName
 ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) + 
   geom_density() + 
-  labs(title = "Distribution of Game Duration by Queue Type", x = "Game Duration", y = "Density") 
+  labs(title = "Distribution of Game Duration by Queue Type", x = "Game Duration (Seconds)", y = "Density") 
 ```
 
 
@@ -581,6 +595,19 @@ DT::datatable(
   )
 )
 
+```
+
+```{r, echo=FALSE}
+
+```
+
+```{r, echo=FALSE}
+```
+
+```{r,echo=FALSE}
+```
+
+```{r,echo=FALSE}
 ```
 
 
@@ -731,7 +758,7 @@ ggplotly(
   count(Lane, wt = kills) %>%
   rename(kills = n),
   aes(x = Lane, y = kills, fill = Lane, text = paste("Count:", after_stat(y))))
-  + geom_col() + labs(title= "Kills vs Lane", x = "Lane", y = "Kills"),
+  + geom_col() + labs(title= "Total Kills per Lane", x = "Lane", y = "Kills"),
   tooltip = "text",
   na.rm = TRUE)
 ```
@@ -745,12 +772,19 @@ ggplotly(
 The more money you have the better the items. 
 Better items means more damage dealt specially if you are a bottom, Top and Jungle. 
 
+```{r, echo=FALSE}
+MSI_Tbl <- MSI_Tbl %>%
+  mutate(Win = factor(Win, levels = c(0, 1), labels = c("Lose", "Win")))
+
+
+```
+
 
 ```{r, echo=FALSE}
 # 6. Analyze if total gold or dmg dealt increases the chances of winning
 # The plot shows that earning more gold and dealing more damage do increase the chances of winning
 
-ggplot(MSI_Tbl %>% drop_na(TotalGold), aes(x = TotalGold, y = DmgDealt, color = Win)) + geom_point(alpha = 0.2) + 
+ggplot(MSI_Tbl %>% drop_na(TotalGold), aes(x = TotalGold, y = DmgDealt, color = Win)) + geom_point(alpha = 0.4, size = 0.8) + 
   labs(title="Total Gold vs Damage Dealt by Win/Lose",
        x = "Total Gold",
        y = "Damage Dealt")
@@ -763,12 +797,12 @@ ggplot(MSI_Tbl %>% drop_na(TotalGold), aes(x = TotalGold, y = DmgDealt, color = 
 #10. Find mean, min, max of visionscore and plot mean of visionScore for winning and loosing teams
 
 VS <-MSI_Tbl %>% 
-  mutate(Win = ifelse(Win==0, "Lose", "Win")) %>% 
+  drop_na(visionScore) %>% 
   group_by(Win) %>% 
   summarise(VS_avg = mean(visionScore, na.rm =TRUE),
             VS_min = min(visionScore, na.rm =TRUE), 
-            VS_max = max(visionScore, na.rm =TRUE)) %>%
-  drop_na(Win)
+            VS_max = max(visionScore, na.rm =TRUE),
+            .groups = "drop")
 
 ```
 
@@ -783,13 +817,12 @@ How does vision score correlate to winning?
 #The plot shows higher vision score average will have higher chances of winning
 
 ggplot(VS, aes(x = Win, y = VS_avg, fill = Win)) +
-  geom_col() + 
+  geom_col() +  
   labs(
    title = "Vision Score: Winning vs Losing",
        x = "Result",
        y = "Vision Score Average"
-    )
-
+    ) 
 ```
 
 
@@ -799,9 +832,10 @@ ggplot(VS, aes(x = Win, y = VS_avg, fill = Win)) +
 ```{r, echo=FALSE}
 #11. Analyze if higher visionScore mean more wins
 
-ggplot(MSI_Tbl %>% 
-         mutate(Win = ifelse(Win == 1, "Win","Lose")) %>% drop_na(Win), aes(y = kills, x = visionScore, color = Win)) +
-  geom_jitter(alpha = 0.3, width = 0.2) + scale_color_manual(values = c("Win" = "blue", "Lose" = "magenta"))+
+ggplot(MSI_Tbl %>%
+        filter(visionScore > 0) %>% 
+        drop_na(visionScore, Win), aes(y = kills, x = visionScore, color = Win)) +
+  geom_jitter(alpha = 0.3, width = 0.2) + scale_color_manual(values = c("Win" = "blue", "Lose" = "red"))+
   labs(title = "Kills by Vision Score",
        x = "Vision Score",  y= "Kills")
          
@@ -811,7 +845,7 @@ ggplot(MSI_Tbl %>%
 
 ```{r, echo=FALSE}
 
-ggplotly(ggplot(MSI_Tbl %>% drop_na(visionScore), aes(x = visionScore, y = kills, color = Lane)) + geom_smooth(se = FALSE) +
+ggplotly(ggplot(MSI_Tbl %>% filter(toupper(Lane) != "NONE") %>%  drop_na(visionScore), aes(x = visionScore, y = kills, color = Lane)) + geom_smooth(se = FALSE) +
   labs(title = "Vision Score vs Kills by Lane Role",
        x= "Vision Score", y = "Kills"))
 ```
@@ -820,7 +854,7 @@ ggplotly(ggplot(MSI_Tbl %>% drop_na(visionScore), aes(x = visionScore, y = kills
 
 ```{r, echo=FALSE}
 
-ggplot(MSI_Tbl %>% mutate(Win = ifelse(Win == 1, "Win", "Lose")) %>% drop_na(visionScore), aes(x = visionScore, y = deaths, color = Lane)) + geom_smooth(se = FALSE) +
+ggplot(MSI_Tbl %>% filter(toupper(Lane) != "NONE") %>% drop_na(visionScore), aes(x = visionScore, y = deaths, color = Lane)) + geom_smooth(se = FALSE) +
   labs(title = "Vision Score vs Deaths by Lane Role",
        x= "Vision Score", y = "Deaths") + facet_wrap(~Win) + theme_dark()
 ```
@@ -887,10 +921,18 @@ N_MSI_Tbl <- full_join(temp_MSI_Tbl, new_temp_MSI_Tbl, by = join_by(ItemNames))
 DT::datatable(
   ntms,
   rownames = FALSE,
-  options = list( scrollX = TRUE, pageLength = 15, autoWidth = TRUE, columnDefs = list(list(className = "dt-center", targets = "_all"))))
+  options = list(
+    scrollX = TRUE,
+    pageLength = 15,
+    autoWidth = TRUE,
+    columnDefs = list(
+      list(className = 'dt-center', targets = "_all"),  
+      list(targets = 0, width = '500px')                
+    )
+  )
+)
 
 ```
-
 
 
 
@@ -915,7 +957,7 @@ ggplot(Top_Items, aes(x=reorder(ItemNames, -Total_Items), y = Total_Items, fill 
             size = 3.5, 
             color = "black")+
            labs(
-             title ="Top 10 Items", 
+             title ="Top 10 Overall Items", 
              x = "Item Names",
              y = "Total Items") + coord_flip()+ ylim(0, max(Top_Items$Total_Items) * 1.2)
 
@@ -955,6 +997,103 @@ ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_
                 y = "Number of Champions"), tooltip = "text")
 ```
 
+
+**Champions and items used** in the data below we selected the top 10 most played champions and what are commonly purchased by a user and their rank
+
+```{r, echo=FALSE}
+
+champ_data <- left_join(MSI_Tbl, SMR_Tbl, by = c("SummonerMatchFk" = "SummonerMatchId"))
+
+
+champ_usage <- champ_data %>%
+  filter(Lane !="NONE") %>% 
+  drop_na(ChampionName, RankName) %>%
+  group_by(RankName, ChampionName) %>%
+  summarise(Count = n(), .groups = "drop")
+
+```
+
+```{r, echo=FALSE}
+top_champs_by_rank <- champ_usage %>% 
+  group_by(RankName) %>% 
+  slice_max(order_by = Count, n = 10) %>% 
+  arrange(RankName, desc(Count)) %>% 
+  ungroup()
+```
+
+```{r, echo=FALSE}
+top_champs_by_rank$RankName <- factor(
+  top_champs_by_rank$RankName,
+  levels = c("Unranked","Iron","Bronze","Silver","Gold","Platinum","Emerald","Diamond",
+             "Master","Grandmaster","Challenger"))
+
+plot_each_rank_champ <- top_champs_by_rank %>% 
+  group_by(RankName) %>% 
+  group_map(~ {
+  ggplot(.x,
+         aes(x = reorder(ChampionName, Count), y = Count, fill = ChampionName, text = paste("Count:", after_stat(y)))) +
+    geom_col() + geom_text(aes(label = Count), hjust = -0.2, size = 3.5, color = "black") +
+    coord_flip() +
+    labs(
+      title = paste("Top 10 Champions", unique(.y$RankName)),
+      x = "Champion",
+      y = "Usage Count"
+    )})
+
+plot_each_rank_champ[[1]]
+plot_each_rank_champ[[2]]
+plot_each_rank_champ[[3]]
+plot_each_rank_champ[[4]]
+plot_each_rank_champ[[5]]
+plot_each_rank_champ[[6]]
+plot_each_rank_champ[[7]]
+plot_each_rank_champ[[8]]
+plot_each_rank_champ[[9]]
+plot_each_rank_champ[[10]]
+plot_each_rank_champ[[11]]
+```
+
+
+```{r, echo = FALSE}
+
+champ_winrate <- champ_data %>%
+  drop_na(ChampionName, Win) %>%
+  group_by(ChampionName) %>%
+  summarise(
+    Games   = n(),
+    Wins    = sum(Win == "Win"),
+    WinRate = Wins / Games,
+    .groups = "drop"
+  )
+
+# Require at least 50 games to be considered
+top_champs_by_winrate <- champ_winrate %>%
+  filter(Games >= 50) %>%
+  slice_max(order_by = WinRate, n = 10) %>% 
+  arrange(Wins)
+
+DT::datatable(top_champs_by_winrate,
+              rownames = FALSE,
+              options = list(autoWidth = TRUE))
+
+```
+
+
+
+```{r, echo=FALSE}
+ggplot(top_champs_by_winrate,
+       aes(x = reorder(ChampionName, Wins), y = Wins, fill = ChampionName, text = paste("Wins:", after_stat(y)))) +
+  geom_col() + geom_text(aes(label = Wins), hjust = -0.2, size = 3.5, color = "black") +
+  coord_flip() +
+  labs(
+    title = "Champions with the Most Wins (Overall)",
+    x = "Champion",
+    y = "Number of Wins"
+  ) +
+  guides(fill = "none")
+
+```
+
 # More about the players 
 
 It is interesting to see the amount of players that get online to play League of Legends. 
@@ -983,7 +1122,7 @@ Player_Games <- SMR_Tbl %>%
 #How many players play in each queue type, a player can play multiple queue types in league of legends. No map restriction.
 
 ggplotly(ggplot(Player_Games %>%
-                  drop_na(QueueType),aes(x = QueueType, fill = QueueType, text = paste("Count:", after_stat(count)))) + geom_bar() + labs(title = "Queue Type vs Players", x = "Queue Type", y = "Number of Players"), tooltip = "text", na.rm = TRUE)
+                  drop_na(QueueType),aes(x = QueueType, fill = QueueType, text = paste("Count:", after_stat(count)))) + geom_bar() + labs(title = "Player Participation Across Queue Types", x = "Queue Type", y = "Number of Players"), tooltip = "text", na.rm = TRUE)
 
 ```
 
@@ -1004,7 +1143,7 @@ rank_data <- Player_Games %>%
   mutate(RankName = factor(RankName, levels = rank_levels))
 
 
-ggplotly(ggplot(rank_data ,aes(x = RankName, y = Players, fill = RankName, text = paste("Count:", after_stat(y)))) + geom_col() + labs(title = "Rank Name vs Players", x = "Rank Name", y = "Players"), tooltip = "text")
+ggplotly(ggplot(rank_data ,aes(x = RankName, y = Players, fill = RankName, text = paste("Count:", after_stat(y)))) + geom_col() + labs(title = "Player Distribution by Rank", x = "Rank Name", y = "Players"), tooltip = "text")
 
 ```
 
