@@ -302,7 +302,7 @@ Why is it that the mean for Baron, Rift and Dragon Kills is smaller than regular
 **Fun fact:** The first Baron must be defeated with at least 3-4 players, or else you will die. Afterwards 2 players is enough but it takes time to defeat Baron, not an easy tasks to do alone. 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE,  cache=FALSE}
 a1 <- ggplot(Team_Winner_Stats, aes(x = QueueType, y = MeanKills, fill = Side)) + geom_col(width = 0.7, position = position_dodge(width = 0.8)) + ggtitle("Average Kills") + coord_flip() + common_theme + labs(x = NULL, y = NULL) + guides(fill = "none")
 
 a2 <- ggplot(Team_Winner_Stats %>% 
@@ -384,7 +384,7 @@ ggplot(TMR_Tble %>%
          drop_na(BlueWin), aes(x= GameDuration, y = BlueKills, color = BlueWin )) + 
   geom_jitter(alpha = 0.2) + 
   labs(title = "Game Duration vs Blue Kills by Queue Type",
-       x = "Game Duration", 
+       x = "Game Duration (Seconds)", 
        y = "Blue Kills") +
   facet_wrap(~QueueType)
 
@@ -403,7 +403,7 @@ ggplot(TMR_Tble %>%
          drop_na(QueueType) %>% 
          drop_na(RedWin), aes(x= GameDuration, y = RedKills, color = RedWin )) + geom_jitter(alpha = 0.2) +
   labs(title = "Game Duration vs Red Kills by Queue Type", 
-       x = "Game Duration", 
+       x = "Game Duration (Seconds)", 
        y = "Red Kills") + 
   facet_wrap(~QueueType)
 
@@ -433,7 +433,7 @@ ggplot(TMR_Tble %>%
          drop_na(Winning_Team), aes(x = GameDuration, y = TotalKills, color = Winning_Team)) +
   geom_jitter(alpha = 0.08) +
   labs(title = "Game Duration vs Total Kills by Queue Type", 
-       x= "Game Duration", 
+       x= "Game Duration (Seconds)", 
        y = "Total Kills") +
   facet_wrap(~QueueType) + 
   scale_color_manual(values = c("Red" = "red", "Blue" = "blue"))
@@ -460,7 +460,7 @@ Team_Winner_Tbl %>%
 
 ```{r, echo=FALSE}
 ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_jitter( alpha= 0.5) +
-  labs(title = "Game Duration vs Kills by Side", x = "Game Duration", y = "Kills") +
+  labs(title = "Game Duration vs Kills by Side", x = "Game Duration (Seconds)", y = "Kills") +
   scale_color_manual(values = c("Red" = "red", "Blue" = "blue"))
 
 ```
@@ -470,7 +470,7 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = Side)) + geom_j
 ```{r, echo=FALSE}
 ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueType)) +
            geom_point(alpha = 0.2) +
-           labs(title = "Game Duration vs Kills by Queue Type", x = "Game Duration", y = "Kills"))
+           labs(title = "Game Duration vs Kills by Queue Type", x = "Game Duration (Seconds)", y = "Kills"))
 
 ```
 
@@ -482,7 +482,7 @@ ggplotly(ggplot(Team_Winner_Tbl, aes(x = GameDuration, y = Kills, color = QueueT
 
 
 ```{r, echo=FALSE}
-ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() + labs(title = "Distribution of Game Duration", x = "Game Duration", y = "Density") +  scale_color_manual(values = c("Red" = "red", "Blue" = "blue"))
+ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = Side)) + geom_density() + labs(title = "Distribution of Game Duration", x = "Game Duration (Seconds)", y = "Density") +  scale_color_manual(values = c("Red" = "red", "Blue" = "blue"))
 
 ```
 
@@ -497,7 +497,7 @@ Team_Winner_Tbl$RankName <- factor(
 ```{r,echo=FALSE}
 
 ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density() +
-  labs(title = "Distribution of Game Duration by Rank Name", x = "Game Duration", y = "Density") +
+  labs(title = "Distribution of Game Duration by Rank Name", x = "Game Duration (Seconds)", y = "Density") +
   facet_wrap(~RankName)
 
 ```
