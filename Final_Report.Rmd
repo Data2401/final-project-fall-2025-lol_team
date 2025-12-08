@@ -346,8 +346,9 @@ ggplot(TMR_Tble %>%
 
 
 Across all queue types, there is a strong relationship between game duration and the number of kills. 
-    - Shorter games lead to low kill counts
-    - Longer games lead to high kill count
+
+  - Shorter games lead to low kill counts
+  - Longer games lead to high kill count
     
 Regardless of the team, the pattern appears on both red and blue teams, indicating that the number of kills is not based on team side but on how long the match lasts. Early kills, however, play a more decisive role in shaping the outcome of a match. In both Red and Blue team plots we can see that a winning team tends to get more kills early on in the game. This is due to early kill advantages such as gold and experience which leads to map and lane pressure. Although longer game duration does lead to more kills, the plot suggests that their importance becomes minuscule leading to smaller gaps of winning and losing teams and less kill advantage. 
 
