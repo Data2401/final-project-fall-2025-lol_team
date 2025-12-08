@@ -796,6 +796,8 @@ DT::datatable(
 
 The results of this table show that these items are the least likely to be built by players. Some of these items like the elixirs are consumable, making them a 1 to multiple time use but are rarely purchased. Other items are situational and are only relevant to specific matches. 
 
+The table above only reveals the mean and medium resulting in the top 10 items. 
+
 <br>
 
 ```{r, echo=FALSE}
