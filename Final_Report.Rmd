@@ -86,7 +86,7 @@ We will examine how factors such as average, maximum kills relate to a team's li
 - Game Duration (seconds)
 
  
-##<b> Kill Distribution Analysis: Average and Maximum</b>
+### <b>Kill Distribution Analysis: Average and Maximum</b>
 
 **What can be killed in league of legends?** 
 
