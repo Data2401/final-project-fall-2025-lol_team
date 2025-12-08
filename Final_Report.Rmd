@@ -271,9 +271,10 @@ grid.arrange(b1,b3,b4,b5,b2, nrow = 3, ncol = 2, top = "Team Winner Statistics",
 
 
 The bar graphs above show that throughout the maps the leading team with the highest average and max kills for winning teams is the classic queue type.
-    - Aram, Swiftplay, and Ultbook show lower kill data, which aligns with their shorter and more chaotic playstyles. 
-    - Both teams (Red, Blue) show similar kill averages and max values, which indicate no map advantage when it comes to kills. 
-    - Winning teams generally meet the average and max number of epic monster kills necessary to win the game, suggesting it is important to complete the objective control of these monsters. 
+
+  - Aram, Swiftplay, and Ultbook show lower kill data, which aligns with their shorter and more chaotic playstyles. 
+  - Both teams (Red, Blue) show similar kill averages and max values, which indicate no map advantage when it comes to kills. 
+  - Winning teams generally meet the average and max number of epic monster kills necessary to win the game, suggesting it is important to complete the objective control of these monsters. 
 
 Overall, the kill patterns observed in the plots are consistent with each queue type and their respective objectives, spawning times, and intended game play style. Which should be considered when comparing performance across queue types. 
 
@@ -361,8 +362,9 @@ ggplot(match_rank_tbl, aes(x = GameDuration, color= QueueType)) +
 
 
 The density plot above displays distinct differences between each queue type.
-    * Classic mode shows the longest average game duration, with many of the matches ranging between 1500 seconds to 2500 seconds (25 to 40 minutes). Indicating a more complex game mode than the rest due to their scaling and more competitive format. 
-    * Cherry has the shortest game, while Swiftplay and Ultbook and Aram are fast paced game modes.
+
+  * Classic mode shows the longest average game duration, with many of the matches ranging between 1500 seconds to 2500 seconds (25 to 40 minutes). Indicating a more complex game mode than the rest due to their scaling and more competitive format. 
+  * Cherry has the shortest game, while Swiftplay and Ultbook and Aram are fast paced game modes.
 
 This influences how games play out, shaping the patterns and interactions that are done both individually and as a team which can help determine if a team wins or loses
 
@@ -386,9 +388,10 @@ ggplot(Team_Winner_Tbl, aes(x = GameDuration, color = RankName)) + geom_density(
 
 
 A rank name in League of Legends represents the player’s skill level, ranging from Iron the lowest to Challenger the highest. The rank names can be categorized as lower ranks, middle ranks, and high ranks. League of Legends also has unranked players who have not yet been assigned a rank, they are new players, or are players in placement games. 
-    * Lower rank: Includes Iron, Bronze, and Silver that represent newer or unskilled players 
-    * Middle rank: Indudes Gold, Platinum, and Emerald that represent average skilled players
-    * High rank: Includes Diamonds, Master, Grandmaster, and Challenger that represent very high skill and experienced players
+
+  * **Lower rank:** Includes Iron, Bronze, and Silver that represent newer or unskilled players
+  * **Middle rank:** Indudes Gold, Platinum, and Emerald that represent average skilled players
+  * **High rank:** Includes Diamonds, Master, Grandmaster, and Challenger that represent very high skill and experienced players
     
 The density plot above shows game duration across different ranks in the game. The plot indicates how frequently certain match lengths occur within each rank. Lower and middle ranks show wider distributions and longer average game duration that shows less consistent game play. Some games in the lower ranks often last approximately 40 minutes. The higher ranked games are more focused and show more consistent match lengths, faster decision making, and overall efficient game control. 
 
@@ -413,22 +416,26 @@ The map in League of Legends has three main lanes, top, middle, and bottom, and 
 **Middle Lane:** The central solo lane where players can easily roam and reach the top and bottom lanes and also help the jungler player. Typical champions for this lane include fighters, mages, and assassins. The mid laner’s goal is to roam to other lanes, far minions, and kill the lane opponent. 
 
 **Bottom Lane:** Unlike the other lanes, it is the duo lane: the Attack Damage Carry (ADC) and the Support.
+
   **ADC**
-    - Has moderate to high kill distribution
-    - Needs gold and items to become strong
-    - It is weak early in the game and becomes stronger later to carry the team
-    - Their main goal is to farm minions and deal damage
-    - Jinx, Ashe, Miss Fortune, Vayne, and Caitlyn are some of the most popular bottom champions
+  
+  - Has moderate to high kill distribution
+  - Needs gold and items to become strong
+  - It is weak early in the game and becomes stronger later to carry the team
+  - Their main goal is to farm minions and deal damage
+  - Jinx, Ashe, Miss Fortune, Vayne, and Caitlyn are some of the most popular bottom champions
     
   **Support**
-    - Protects ADC and help team win fights
-    - Controls vision by placing wards, clearing enemy wards, and buying more wards 
-    - Support champions are Tank, Healing, and Damage supports
+  
+  - Protects ADC and help team win fights
+  - Controls vision by placing wards, clearing enemy wards, and buying more wards 
+  - Support champions are Tank, Healing, and Damage supports
 
 **Jungle Lane:** Jungler is not in a specific lane and instead the jungle player moves to different lanes to watch for enemies, warn teammates of any attack, and steal camps. Unlike the main lane players,the jungler kills the jungle monsters instead of minions for more gold, helps the main laners to win, and controls major objectives, such as dragons, rift herald, and baron Nashor. They try to kill wolves, blue and red buff, raptors, and krugs to get gold and experience. Some of the common jungle champions are
-    - Assassins: Evelynn and Kha’Zix
-    - Tanks: Amumu, Sejuani
-    - Fighters: Lee Sin
+
+  - Assassins: Evelynn and Kha’Zix
+  - Tanks: Amumu, Sejuani
+  - Fighters: Lee Sin
 
 
 ```{r, echo=FALSE}
@@ -575,6 +582,7 @@ grid.arrange(mean2, med2, max2, nrow=3, top = textGrob("Player Tower(Turret) Sta
 
 
 - Bottom lane has the highest average and maximum of total damage done to enemy’s tower during a match
+
 - It is possible because the bottom role is designed in a way where one player is farming and gets most gold and the other player protects and helps with fights.
 
 <br>
@@ -586,6 +594,7 @@ grid.arrange(mean3, med3, max3, nrow=3, top = textGrob("Player Damage Taken Stat
 
 
 - The top lane has the highest average of damage taken. It is expected because it is 1v1 and an isolated lane far from safety. 
+
 - The middle lane has the maximum damage taken because of its location in the center of the map, it is more involved in more fights, and most of the time it gets ganked by jungle players. 
 
 <br><br>
@@ -603,7 +612,8 @@ grid.arrange(mean5, med5, max5, nrow=3, top = textGrob("Player Gold Stats", gp =
 
 
 The bar graphs above reveal that Top lane  tends to earn the most gold out of all the lanes, followed by Bottom then Jungle. Isolated lanes like top lane and middle lane are bound to receive more gold if properly farmed. 
-    - Staying prolonged times in your lane or isolated while farming increases your gold income. 
+
+  - Staying prolonged times in your lane or isolated while farming increases your gold income. 
     
 **So why is the bottom role second, if it is not an isolated lane?** This is due to their role, they prioritize farming earlier in the game, this is also why support will have the lowest gold, their role is to make sure your bottom player is getting all the gold they can through enemy kills, minion kills,  and objective tasks by protecting them from any attacks.
 
@@ -855,9 +865,10 @@ ggplotly(ggplot(Top_champs, aes(x = reorder(ChampionName, -num_champs), y = num_
 
 
 The bar chart above reveals that the most popular champions are usually used by the bottom lane players.
-    - Kaisa can be used for both bottom lane and middle lane, depending on her item selection you can have either AP or AD damage, making her popularity no surprise since she can be selected in different roles.
-    - Caitlyn is the second most played champion, which is predominantly played in bottom lane as well, she has a strong early game presence making her dominant in lane strategies.
-    - The rest of the champions are relatively close in frequency and serve specific roles such as support, jungle, middle. Suggesting a well balanced distribution of popularity of champions. 
+
+  - Kaisa can be used for both bottom lane and middle lane, depending on her item selection you can have either AP or AD damage, making her popularity no surprise since she can be selected in different roles.
+  - Caitlyn is the second most played champion, which is predominantly played in bottom lane as well, she has a strong early game presence making her dominant in lane strategies.
+  - The rest of the champions are relatively close in frequency and serve specific roles such as support, jungle, middle. Suggesting a well balanced distribution of popularity of champions. 
 
 <br>
 
@@ -1053,6 +1064,7 @@ The distribution of players is a key finding that supports some of the insights 
 
 This analysis explored different factors that influence gameplay and performance in League of Legends, including team performance, game duration, queue type, rank, lane, kill, gold, vision score, champions, and item usage. We uncovered several key factors that determine victory in a League of Legends match.
 Key insights include
+
   * Winning teams consistently achieve higher kills early in the game
   * Total kills increase as game duration increases, and early skills in the game benefit more than the late-game kills
   * Queue type and rank both had a large impact on game duration. Higher-ranked players had shorter games and Classic mode had the longest game among all the queue types. 
