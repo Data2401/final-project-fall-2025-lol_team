@@ -273,6 +273,8 @@ The bar graphs above show that throughout the maps the leading team with the hig
 
 Overall, the kill patterns observed in the plots are consistent with each queue type and their respective objectives, spawning times, and intended game play style. Which should be considered when comparing performance across queue types. 
 
+<br><br>
+
 ## <b>Analysis of Game Duration Distribution </b>
 
 **How does game duration influence total kills and win rates?**
@@ -307,7 +309,8 @@ To better understand how time impacts performance across queue types, we will di
     - Combat rounds only 
     - 2v2v2v2
     - Success depends on champion combat strength, adaptation, item optimization
-
+    
+<br>
 
 ```{r, echo=FALSE}
 ggplot(TMR_Tble %>% 
@@ -343,6 +346,7 @@ Across all queue types, there is a strong relationship between game duration and
     
 Regardless of the team, the pattern appears on both red and blue teams, indicating that the number of kills is not based on team side but on how long the match lasts. Early kills, however, play a more decisive role in shaping the outcome of a match. In both Red and Blue team plots we can see that a winning team tends to get more kills early on in the game. This is due to early kill advantages such as gold and experience which leads to map and lane pressure. Although longer game duration does lead to more kills, the plot suggests that their importance becomes minuscule leading to smaller gaps of winning and losing teams and less kill advantage. 
 
+<br>
 
 ```{r, echo=FALSE}
 #Plot game duration as the Y value and Queue type as the X value, filter based on RankName
@@ -358,6 +362,7 @@ The density plot above displays distinct differences between each queue type.
 
 This influences how games play out, shaping the patterns and interactions that are done both individually and as a team which can help determine if a team wins or loses
 
+<br>
 
 ```{r, echo=FALSE}
 Team_Winner_Tbl$RankName <- factor(
@@ -395,7 +400,7 @@ In this section we will focus on individual performance by analyzing kill patter
   - **Items:** Enhance champion stats and abilities (defense and offensive play style) 
   
 
-## <b>Kill Distribution Analysis: Lane Performance</b>
+### <b>Kill Distribution Analysis: Lane Performance</b>
 
 The map in League of Legends has three main lanes, top, middle, and bottom, and a jungle that goes from between the lanes. Champion types and responsibilities differ in each lane
 
@@ -431,6 +436,7 @@ ggplot(matchStatsTbl, aes(x= kills, color = Lane)) + geom_density() +
 
 The density plot shows the distribution of kills across each lane in the game. The curves show how frequently kill values occur in each lane. In the plot above, we can see that Support has the highest peak that means that it consistently gets kills. The plot shows that the jungle has the widest density curve that means it has the largest range of kills. The jungle has the widest curve because the player in this lane moves to different lanes and helps them in fighting across the map. Support has the most narrow curve that has the smallest range of kills. 
 
+<br>
 
 ```{r, echo=FALSE}
 #Lane Data analysis for MSI Kills Column plot
@@ -450,6 +456,7 @@ ggplotly(
 
 The graph shows the total number of kills in each lane across all games. Our plot indicates that the top lane has the most kills because the top lane is a 1v1 lane with frequent trade and jungle attacks. Total kills for middle and bottom lanes are similar with only some difference between them. This is expected because middle laners roam into the other lanes and help them with fights and kills, and the bottom lane is a 2v2 match where Support helps them win a fight. Support has the least number of kills, which is expected because Support concentrates on controlling vision and protects teammates instead securing kills. Game duration significantly impacts kill distribution across all games as Longer games tend to have more kills due to longer teamfights. Queue types also impact total kills because some queue types are more competitive than the others. 
 
+<br>
 
 ```{r, echo=FALSE}
 #Mean median min and max of minions killed: 
@@ -555,6 +562,7 @@ grid.arrange(mean1, med1, max1, nrow=3, top = textGrob("Player Minion Stats", gp
 - Bottom lane has the highest average and maximum of minions killed per lane
 - It is expected because bottom is duo player and one player always roam and help the team with fights and kills
 
+<br>
 
 ```{r, echo=FALSE, eval=TRUE,  fig.width=10, fig.height=12}
 grid.arrange(mean2, med2, max2, nrow=3, top = textGrob("Player Tower(Turret) Stats", gp = gpar(fontsize = 20, fontface = "bold")),left = textGrob("Lane", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("(1) Average, (2) Median, (3) Max",gp = gpar(fontsize = 16, fontface = "bold")))
@@ -565,6 +573,7 @@ grid.arrange(mean2, med2, max2, nrow=3, top = textGrob("Player Tower(Turret) Sta
 - Bottom lane has the highest average and maximum of total damage done to enemy’s tower during a match
 - It is possible because the bottom role is designed in a way where one player is farming and gets most gold and the other player protects and helps with fights.
 
+<br>
 
 ```{r, echo=FALSE, eval=TRUE,  fig.width=10, fig.height=12}
 grid.arrange(mean3, med3, max3, nrow=3, top = textGrob("Player Damage Taken Stats", gp = gpar(fontsize = 20, fontface = "bold")),left = textGrob("Lane", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("(1) Average, (2) Median, (3) Max",gp = gpar(fontsize = 16, fontface = "bold")))
@@ -575,11 +584,13 @@ grid.arrange(mean3, med3, max3, nrow=3, top = textGrob("Player Damage Taken Stat
 - The top lane has the highest average of damage taken. It is expected because it is 1v1 and an isolated lane far from safety. 
 - The middle lane has the maximum damage taken because of its location in the center of the map, it is more involved in more fights, and most of the time it gets ganked by jungle players. 
 
+<br><br>
 
-## <b>Gold Distribution Analysis</b>
+### <b>Gold Distribution Analysis</b>
 
 Gold is imperative in the game of league of legends, making it a much needed resource to scale throughout the game. Our previous data examined players' damage dealt, now we will examine if gold influences damage and how gold varies across lanes. 
 
+<br>
 
 ```{r, echo=FALSE, eval=TRUE,  fig.width=10, fig.height=12}
 grid.arrange(mean5, med5, max5, nrow=3, top = textGrob("Player Gold Stats", gp = gpar(fontsize = 20, fontface = "bold")),left = textGrob("Role", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("(1) Average, (2) Median, (3) Max",gp = gpar(fontsize = 16, fontface = "bold")))
@@ -592,6 +603,7 @@ The bar graphs above reveal that Top lane  tends to earn the most gold out of al
     
 **So why is the bottom role second, if it is not an isolated lane?** This is due to their role, they prioritize farming earlier in the game, this is also why support will have the lowest gold, their role is to make sure your bottom player is getting all the gold they can through enemy kills, minion kills,  and objective tasks by protecting them from any attacks.
 
+<br>
 
 ```{r, echo=FALSE}
 MSI_Tbl <- MSI_Tbl %>%
@@ -619,7 +631,7 @@ The scatter plot above reveals that as gold increases, the damage dealt also inc
     * Some champions do a lot of damage with little to no items
     
 
-## <b>Vision Score Analysis</b>
+### <b>Vision Score Analysis</b>
 
 Vision score provides insight to an individual's strategic gameplay and team cordination by measuring their contribution to map control and map awareness. To understand the importance of placing wards (vision trinkets) and maintaining vision, we evaluated  and compared vision scores between winning and losing teams, examined how kills relate to vision score and identified lane patterns by analyzing both kills and deaths across roles. 
 
@@ -652,6 +664,7 @@ ggplot(VS, aes(x = Win, y = VS_avg, fill = Win)) +
 
 The bar chart above compares both winning and losing teams and shows that even though there is not a dramatic difference, it suggests that players on the winning side generally contribute more to vision control. 
 
+<br>
 
 ```{r, echo=FALSE}
 #11. Analyze if higher visionScore mean more wins
@@ -668,6 +681,7 @@ ggplot(MSI_Tbl %>%
 
 The scatter plot above  reveals that lower vision is strongly associated with higher kill counts, the cluster of kills between 20 to 40 are found in vision scores between 0 to 30. As vision increases, kills decrease. This pattern reflects role utility through safer decision making when vision is higher by choosing safer pathing, objective control and improved team coordination. 
 
+<br>
 
 ```{r, echo=FALSE}
 
@@ -679,6 +693,7 @@ ggplotly(ggplot(MSI_Tbl %>% filter(toupper(Lane) != "NONE") %>%  drop_na(visionS
 
 Kills vary by lane role but overall kills are higher at low vision scores and decrease as vision increases. As the game progresses, some roles see a spike in kills, while others are unaffected by the vision increase. For example, the bottom doesn’t see a huge spike like support or middle lane players, this is because they are meant to stay in the backline and only wander the map with other members and not by themselves. Support on the other hand their role is to maintain vision for everyone and as the game progresses assist other lanes like middle lane, in order to play more aggressively.
 
+<br>
 
 ```{r, echo=FALSE}
 
@@ -690,11 +705,13 @@ ggplot(MSI_Tbl %>% filter(toupper(Lane) != "NONE") %>% drop_na(visionScore), aes
 
 Kills vary by lane role but overall kills are higher at low vision scores and decrease as vision increases. As the game progresses, some roles see a spike in kills, while others are unaffected by the vision increase. For example, the bottom doesn’t see a huge spike like support or middle lane players, this is because they are meant to stay in the backline and only wander the map with other members and not by themselves. Support on the other hand their role is to maintain vision for everyone and as the game progresses assist other lanes like middle lane, in order to play more aggressively.
 
+<br>
 
-## <b>Item Frequency Analysis</b>
+### <b>Item Frequency Analysis</b>
 
 Item selection plays a key role in champion performance and overall team success. In order to understand the players' build, we explored the frequency of item usage by identifying the top ten, bottom 10 and the mean and median of item choices across all players. 
 
+<br>
 
 ```{r, echo=FALSE}
 #Removing NAs from the MSI_Tbl
@@ -764,6 +781,7 @@ DT::datatable(
 
 The results of this table show that these items are the least likely to be built by players. Some of these items like the elixirs are consumable, making them a 1 to multiple time use but are rarely purchased. Other items are situational and are only relevant to specific matches. 
 
+<br>
 
 ```{r, echo=FALSE}
 #Find the top 10 popular items
@@ -794,8 +812,9 @@ The bar chart above shows the top 10 items most frequently purchased by all play
 
 In league of legends, increased movement speed can be achieved through purchase of boots, but different boot types serve different roles. The bar chart shows all available boots for purchase on the top 10, making this item the most important. Lucidity boots become the most popular among all, granting summoner spell haste (cool down reduction on abilities) and movement speed. Many players seek lucidity boots to decrease their ability to cool down, allowing them to use their special attacks more frequently. Other items such as infinity edge are essential for bottom lane users providing critical strike and increasing damage. Doran’s blade is a starter item that is utilized in early stages of the game and is usually purchased acrossed lane roles.. 
 
+<br>
 
-## <b>Analysis of Champion Popularity and Win Performance</b>
+### <b>Analysis of Champion Popularity and Win Performance</b>
 
 **Which champions are most played, and which champions win the most?**
 
@@ -836,6 +855,7 @@ The bar chart above reveals that the most popular champions are usually used by 
     - Caitlyn is the second most played champion, which is predominantly played in bottom lane as well, she has a strong early game presence making her dominant in lane strategies.
     - The rest of the champions are relatively close in frequency and serve specific roles such as support, jungle, middle. Suggesting a well balanced distribution of popularity of champions. 
 
+<br>
 
 ```{r, echo=FALSE}
 
@@ -886,6 +906,7 @@ plot_each_rank_champ <- lower_ranks %>%
 wrap_plots(plot_each_rank_champ, ncol = 2) 
 
 ```
+<br>
 
 ```{r top_champs_by_rank_higher, echo=FALSE, fig.width=12, fig.height=9, out.width="100%", fig.align="center"}
 
@@ -919,6 +940,7 @@ For **high rank (Master - Challenger)** the dominant champion is Kaisa, followin
 
 Although each rank shows similar patterns in champion selection, one rank shows a more diverse and specialized pick. Challenger doesn’t always stick to specific champions but alternates based on the meta.
 
+<br>
 
 ```{r, echo = FALSE}
 
@@ -964,8 +986,9 @@ In order to evaluate a more meaningful result, we examined champions that have m
 
 Belveth has the highest winrate  rate with a 62.35%, this champion is typically only played in Jungle roles. The rest of the champions have win rates above 57% marking them slightly higher than a balanced meta winrate of about 50%. Not all of the champions in this table have that many games played aside from Tristana, Ahri, and Galio, some like Kalista have few games played but still have a decent winrate. This suggests that commonly played champions don’t always correlate to winning, but instead depend on other factors such as team compositions and skill.
 
+<br>
 
-## <b>Player Distribution Across Queue Types</b>
+### <b>Player Distribution Across Queue Types</b>
 
 
 ```{r, echo=FALSE}
@@ -991,6 +1014,7 @@ ggplotly(ggplot(Player_Games %>%
 
 The data reveals that most players prefer to play Traditional summoner’s rift (Classic) followed by Arena (Cherry) then Aram. Interestingly enough swiftplay and ultbbook are not usually played even though they are also fast paced game modes. This may be due to their lack of meaningful progression, limited benefits, temporary modes, and minimal impact on a player’s critical and tactical thinking. 
 
+<br>
 
 ```{r, echo=FALSE}
 
@@ -1017,10 +1041,34 @@ This chart breaks down the number of players that fall in each category, from hi
 
 The distribution of players is a key finding that supports some of the insights found on other areas of the research. Understanding the distribution of players is crucial because it helps interpret patterns in champion selection, win rates, and performance. 
 
+<br>
 
 # <b> Analysis Summary </b>
 
 ### <b> Problem Statement and Key Insight </b>
 
+This analysis explored different factors that influence gameplay and performance in League of Legends, including team performance, game duration, queue type, rank, lane, kill, gold, vision score, champions, and item usage. We uncovered several key factors that determine victory in a League of Legends match.
+Key insights include
+  * Winning teams consistently achieve higher kills early in the game
+  * Total kills increase as game duration increases, and early skills in the game benefit more than the late-game kills
+  * Queue type and rank both had a large impact on game duration. Higher-ranked players had shorter games and Classic mode had the longest game among all the queue types. 
+  * Unranked players represented a significant portion of the data, indicating widespread participation in a non-competitive game
+  * Lane performance, jungle had the widest range of kills, while support consistently had the lowest kill counts. Top lane had the most damage, while bottom lane was more involved in killing enemies and damaging towers
+  * Gold was one of the main predictors of success in the game. Winning teams achieved more gold, allowing them to purchase better items and enhance their performance
+  * The results show that popular champions do not always lead to success and winning a 
+
 
 ### <b> Implications and Limitations </b>
+
+**Implications**
+
+  * Our findings show that objective control, early-game advantages, gold,  and vision management are the strongest predictors of winning
+  * The result also indicates that teamwork increases chances of winning more than individual attacks and leads to better decision-making, managing attacks, and fighting the enemies. 
+  
+**Limitations**
+
+  * Missing information: Users information was not shared in the dataset.
+  * Certain data was difficult to extract or analyze, due to inconsistencies in formatting, missing values, or data interpretation. 
+  * Unranked players add ambiguity to performance analysis because their actual skill level is unknown and may overlap with multiple ranked players. 
+
+<br><br><br><br><br>
