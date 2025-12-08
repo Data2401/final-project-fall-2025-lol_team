@@ -90,6 +90,7 @@ library(here)
 library(knitr)
 library(grid)
 library(DT)
+library(patchwork)
 source("R_Data_Prep.R")
 
 ```
@@ -1056,17 +1057,7 @@ plot_each_rank_champ <- top_champs_by_rank %>%
       y = "Usage Count"
     )})
 
-plot_each_rank_champ[[1]]
-plot_each_rank_champ[[2]]
-plot_each_rank_champ[[3]]
-plot_each_rank_champ[[4]]
-plot_each_rank_champ[[5]]
-plot_each_rank_champ[[6]]
-plot_each_rank_champ[[7]]
-plot_each_rank_champ[[8]]
-plot_each_rank_champ[[9]]
-plot_each_rank_champ[[10]]
-plot_each_rank_champ[[11]]
+wrap_plots(plot_each_rank_champ, ncol = 2) 
 ```
 
 
