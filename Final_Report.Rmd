@@ -60,6 +60,7 @@ Diving into the data provided, our goal is to provide comprehensive statistical 
 The data used in this project comes from Kaggle. We joined some of our CSV to have more efficient data structure.
 
 Our combined data sets are as follow:
+
 * **MSI_tbl:** This table is a combined version of MatchStatsTbl and ItemTbl. The purpose for joining these tables is to connect in-game performance data with the items purchased by players.
 * **Match_rank_tbl:** This table is created from joining the MatchTbl and RankTbl. The purpose of joining the tables is to connect player skill level with match performance. 
 * **TMR_Tble:** The table is a combined version of TeamMatchTbl and MatchTbl. The purpose for joining these tables is to see team outcomes for every match. 
@@ -67,6 +68,7 @@ Our combined data sets are as follow:
 * **Team_Winner_Tbl:** The purpose for creating this table is that it shows teams that have won from TMR_Tble.
 
 ### <b>Tools and functions used</b>
+
 The following are some of the R packages and tools we utilized for efficient data visualization and performance enhancement.
 
 - **Dplyr:** An R package that is used for selecting, filtering, summarizing, and storing data.
