@@ -741,7 +741,7 @@ grid.arrange(mean4, med4, max4, nrow=3, top = textGrob("Player Damage Dealt Stat
 
 
 ```{r, echo=FALSE, eval=TRUE,  fig.width=10, fig.height=12}
-grid.arrange(mean5, med5, max5, nrow=3, top = textGrob("Player Gold Stats", gp = gpar(fontsize = 20, fontface = "bold")),left = textGrob("Lane", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("Average",gp = gpar(fontsize = 16, fontface = "bold")))
+grid.arrange(mean5, med5, max5, nrow=3, top = textGrob("Player Gold Stats", gp = gpar(fontsize = 20, fontface = "bold")),left = textGrob("Role", rot = 90, gp = gpar(fontsize = 16, fontface = "bold")), bottom = textGrob("Average",gp = gpar(fontsize = 16, fontface = "bold")))
 
 ```
 
@@ -891,7 +891,7 @@ temp_MSI <- MSI_Tbl%>%
   drop_na(ItemName, ItemName_2, ItemName_3, ItemName_4, ItemName_5, ItemName_6)
 
 #Combining the item name columns into one single column
-temp_MSI_Tbl <- MSI_Tbl%>%
+temp_MSI_Tbl <- temp_MSI%>%
   pivot_longer(
     cols = starts_with("ItemName"), # automatically combines columns
     names_to = "Items",             # new column that stores old columns 
@@ -917,7 +917,7 @@ least_items <-new_temp_MSI_Tbl %>%
 DT::datatable(
   least_items,
   rownames = FALSE,
-  options = list( scrollX = TRUE, pageLength = 15, autoWidth = TRUE, columnDefs = list(list(className = "dt-center", targets = "_all"))))
+  options = list( scrollX = TRUE, pageLength = 15, autoWidth = TRUE, columnDefs = list(list(className = "dt-center", targets = "_all"),  list(targets = 0, width = '700px')    )))
 
 #join temp_MSI_Tbl and new_temp_MSI_Tbl to get the mean and median of items a player holds.
 N_MSI_Tbl <- full_join(temp_MSI_Tbl, new_temp_MSI_Tbl, by = join_by(ItemNames)) 
@@ -926,11 +926,13 @@ N_MSI_Tbl <- full_join(temp_MSI_Tbl, new_temp_MSI_Tbl, by = join_by(ItemNames))
 "Mean and Median of items a player holds"
 
  ntms <- new_temp_MSI_Tbl %>% 
-  drop_na(ItemNames) %>% 
-  group_by(ItemNames) %>% 
-  summarise(Items_used_avg = mean(Total_Items), 
-            Items_used_median = median(Total_Items)) %>% 
-  head(n=15)
+   group_by(ItemNames) %>% 
+   summarise(
+    Items_used_avg    = mean(Total_Items),
+    Items_used_median = median(Total_Items)
+  ) %>% 
+   arrange(desc(Items_used_avg)) %>% 
+   head(10)
 
 DT::datatable(
   ntms,
