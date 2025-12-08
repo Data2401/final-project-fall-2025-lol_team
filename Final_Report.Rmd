@@ -41,9 +41,11 @@ source("R_Data_Prep.R")
 The first video game was created in 1952, and since then, games have evolved from simple strategic concepts to more complex and immersive gameplay. League of Legends is considered one of the world’s most popular multi-player online battle arena (MOBA) games. Even games that are supposed to be considered “fun” can also become highly competitive and rewarding. In this report we aim to uncover what it takes for a team to win, both through individual player performance and overall team coordination and decision making.
 
 **Main Objective:**
+
 What are the key predictors of winning a League of Legends match?
 
 **Research Questions:**
+
 - How does game duration influence total kills and win rates?
 - Which champions are most played, and which champions win the most?
 - How do player ranks differ in game play patterns and outcomes?
